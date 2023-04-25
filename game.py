@@ -32,8 +32,8 @@ player_x_position = player_x_coordinate
 player_y_position = HEIGHT - 100
 player_shot_sound = pygame.mixer.Sound('laser.wav')
 bullet_image = pygame.image.load('./bullet.png')
-bullet_speed = 5
-bullets = []
+bullet_speed = 15
+
 
 def draw_player(x, y):
     screen.blit(player_image,(x, y))
@@ -48,13 +48,13 @@ def handle_actions():
     keys = pygame.key.get_pressed()
     handle_player_x_movements(keys)
     handle_player_shot(keys)
-    handle_bullets()
     draw_player(player_x_position, player_y_position)
 
 def handle_player_wall_collisions():
     global player_right_collision
     global player_left_collision
     global player_x_position
+    print(player_x_position)
     if player_x_position >= WIDTH - player_image.get_width():
         player_right_collision = True
     else:
@@ -77,33 +77,20 @@ def handle_player_x_movements(keys):
 
     player_x_position =  player_x_coordinate + speed
 
-
 def handle_player_shot(keys):
-    global player_y_position
     if keys[pygame.K_SPACE]:
         global HEIGHT
         player_shot_sound.play()
-        bullet_y_position = player_y_position
-        bullet_x_position = player_x_position + player_image.get_width()/2 - bullet_image.get_width()/2
-        bullets.append((bullet_x_position, bullet_y_position))
-
-def handle_bullets():
-    global bullets
-    new_bullets = []
-
-    for bullet in bullets:
-        bullet_x_position, bullet_y_position = bullet
-        bullet_y_position -= bullet_speed
-        if bullet_y_position > 0:
-            screen.blit(bullet_image, (bullet_x_position, bullet_y_position))
-            new_bullets.append((bullet_x_position, bullet_y_position))
-        else:
-            pass
-    bullets = new_bullets
-
+        bullet_y_position = HEIGHT
+        screen.blit(bullet_image, (player_x_position/2,bullet_y_position))
+        print("BULLET Y POSITION"+str(bullet_y_position)
+        while(bullet_y_position < 0):
+            bullet_y_position-= bullet_speed
 
 while running:
+
     render()
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
