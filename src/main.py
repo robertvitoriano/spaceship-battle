@@ -1,6 +1,7 @@
 import pygame
-from player import Player
-from bullet import Bullet
+import os
+from src.player import Player
+from src.bullet import Bullet
 # Initialize the Pygame
 pygame.init()
 pygame.mixer.init()
@@ -10,13 +11,13 @@ WIDTH = 800
 HEIGHT = 600
 running = True
 background_music_volume = 0.3
-background_music = pygame.mixer.Sound('background.wav')
+background_music = pygame.mixer.Sound('assets/music/background.wav')
 background_music.set_volume(background_music_volume)
 background_music.play(-1)
 
 # create the screen
 pygame.display.set_caption("Space Invaders")
-background_image = pygame.image.load("background.png")
+background_image = pygame.image.load("assets/images/background.png")
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 player = Player(screen)

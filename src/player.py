@@ -1,6 +1,7 @@
 
 import pygame
-from bullet import Bullet
+import os
+from src.bullet import Bullet
 
 class Player:
     def __init__(self, screen):
@@ -13,12 +14,12 @@ class Player:
         self.player_speed_rate = 8
         self.player_right_collision = False
         self.player_left_collision = False
-        self.image = pygame.image.load('./player.png')
+        self.image = pygame.image.load('assets/images/player.png')
         self.x_coordinate = self.screen_width/2 - self.image.get_width()
         self.x_position = self.x_coordinate
         self.y_position = self.screen_height - 100
-        self.shot_sound = pygame.mixer.Sound('laser.wav')
-        self.bullet_image = pygame.image.load('./bullet.png')
+        self.shot_sound = pygame.mixer.Sound('assets/music/laser.wav')
+        self.bullet_image = pygame.image.load('assets/images/bullet.png')
         self.bullet_speed = 5
         self.bullets = []
         self.screen = screen
