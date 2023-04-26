@@ -1,17 +1,25 @@
 import pygame
+from watchdog.events import FileSystemEventHandler
+from watchdog.observers import Observer
+
 from src.Entities.player import Player
 from src.Entities.enemy import Enemy
 from src.Entities.bullet import Bullet
+from src.watcher import Watcher
 
+observer = Observer()
+observer.schedule(Watcher(), path='./src')
+observer.start()
 # Initialize the Pygame
 pygame.init()
 pygame.mixer.init()
+
 
 # GAME SETTINGS
 WIDTH = 800
 HEIGHT = 600
 running = True
-background_music_volume = 0
+background_music_volume = 0.1
 background_music = pygame.mixer.Sound('assets/music/background.wav')
 background_music.set_volume(background_music_volume)
 background_music.play(-1)
