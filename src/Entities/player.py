@@ -11,7 +11,6 @@ class Player(Spaceship):
         self.x_position = self.x_coordinate
         self.y_position = self.screen_height - 100
 
-
     def handle_wall_collisions(self):
         if self.x_position >= self.screen_width - self.image.get_width():
             self.right_collision = True
