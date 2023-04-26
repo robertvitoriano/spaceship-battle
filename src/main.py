@@ -8,7 +8,7 @@ from src.Entities.bullet import Bullet
 from src.watcher import Watcher
 
 observer = Observer()
-observer.schedule(Watcher(), path='./src')
+observer.schedule(Watcher(), path='./src', recursive= True)
 observer.start()
 # Initialize the Pygame
 pygame.init()
