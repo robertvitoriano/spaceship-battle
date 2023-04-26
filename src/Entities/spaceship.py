@@ -29,19 +29,9 @@ class Spaceship(ABC):
     def draw(self):
         self.screen.blit(self.image, (self.x_position, self.y_position))
 
+    @abstractmethod
     def handle_bullets(self):
-        new_bullets = []
-
-        for bullet in self.bullets:
-            bullet.update()
-            if bullet.y_position > 0:
-                self.screen.blit(self.bullet_image,
-                                 (bullet.x_position, bullet.y_position))
-                new_bullets.append(bullet)
-            else:
-                del bullet
-
-        self.bullets = new_bullets
+        pass
 
     @abstractmethod
     def handle_wall_collisions(self):
