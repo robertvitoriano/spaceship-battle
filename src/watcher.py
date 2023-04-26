@@ -27,15 +27,3 @@ if __name__ == '__main__':
     observer.schedule(Watcher(), path='.')
     observer.start()
 
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                observer.stop()
-                pygame.quit()
-                quit()
-
-        # Add your Pygame code here
-        # ...
-
-        pygame.display.update()
-        clock.tick(60)
