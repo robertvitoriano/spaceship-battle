@@ -10,9 +10,9 @@ class Player(Spaceship):
         self.screen_width = info.current_w
         self.screen_height = info.current_h
         self.speed = 0
-        self.player_speed_rate = 8
-        self.player_right_collision = False
-        self.player_left_collision = False
+        self.speed_rate = 8
+        self.right_collision = False
+        self.left_collision = False
         self.image = pygame.image.load(image_path)
         self.x_coordinate = self.screen_width/2 - self.image.get_width()
         self.x_position = self.x_coordinate
@@ -27,21 +27,21 @@ class Player(Spaceship):
 
     def handle_wall_collisions(self):
         if self.x_position >= self.screen_width - self.image.get_width():
-            self.player_right_collision = True
+            self.right_collision = True
         else:
-            self.player_right_collision = False
+            self.right_collision = False
 
         if self.x_position <= 0:
-            self.player_left_collision = True
+            self.left_collision = True
         else:
-            self.player_left_collision = False
+            self.left_collision = False
 
     def handle_x_movements(self, keys):
-        if keys[pygame.K_LEFT] and not self.player_left_collision:
-            self.speed -= self.player_speed_rate
+        if keys[pygame.K_LEFT] and not self.left_collision:
+            self.speed -= self.speed_rate
 
-        if keys[pygame.K_RIGHT] and not self.player_right_collision:
-            self.speed += self.player_speed_rate
+        if keys[pygame.K_RIGHT] and not self.right_collision:
+            self.speed += self.speed_rate
 
         self.x_position = self.x_coordinate + self.speed
 
