@@ -2,6 +2,7 @@ import pygame
 from abc import ABC, abstractmethod
 
 
+
 class Spaceship(ABC):
     def __init__(self,
                  screen,
