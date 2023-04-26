@@ -1,6 +1,8 @@
 import pygame
 from src.player import Player
+from src.enemy import Enemy
 from src.bullet import Bullet
+
 # Initialize the Pygame
 pygame.init()
 pygame.mixer.init()
@@ -23,6 +25,10 @@ player = Player(screen,
                 'assets/images/player.png',
                 'assets/music/laser.wav',
                 'assets/images/bullet.png')
+enemy = Enemy(screen,
+              'assets/images/enemy.png',
+              'assets/music/laser.wav',
+              'assets/images/bullet.png')
 
 while running:
     screen.blit(background_image, (0, 0))
@@ -33,7 +39,12 @@ while running:
     player.handle_shot(keys)
     player.handle_bullets()
 
+    enemy.handle_x_movements(keys)
+    enemy.handle_wall_collisions()
+
     player.draw()
+    enemy.draw()
+
     pygame.display.update()
 
     for event in pygame.event.get():

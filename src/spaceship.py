@@ -8,7 +8,6 @@ class Spaceship(ABC):
                  image_path,
                  shot_sound_path, bullet_image_path):
 
-        # Get display info
         info = pygame.display.Info()
         self.screen_width = info.current_w
         self.screen_height = info.current_h
@@ -17,8 +16,7 @@ class Spaceship(ABC):
         self.right_collision = False
         self.left_collision = False
         self.image = pygame.image.load(image_path)
-        self.x_coordinate = self.screen_width/2 - self.image.get_width()
-        self.x_position = self.x_coordinate
+        self.x_position = self.screen_width/2 - self.image.get_width()
         self.y_position = self.screen_height - 100
         self.shot_sound = pygame.mixer.Sound(shot_sound_path)
         self.bullet_image = pygame.image.load(bullet_image_path)
