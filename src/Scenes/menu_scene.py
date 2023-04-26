@@ -1,4 +1,5 @@
+from src.Scenes.scene import Scene
 class MenuScene(Scene):
-  __init__():
+  def __init__(self):
     super().__init__()
 

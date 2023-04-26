@@ -1,55 +1,35 @@
 import pygame
-from src.Entities.player import Player
-from src.Entities.enemy import Enemy
-from src.Entities.bullet import Bullet
+from src.game import Game
+from src.Scenes.menu_scene import MenuScene
+from src.Scenes.first_scene import FirstScene
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
 
-# Initialize the Pygame
+observer = Observer()
+observer.schedule(MyHandler(), path='.')
+observer.start()
+
 pygame.init()
 pygame.mixer.init()
 
-# GAME SETTINGS
-WIDTH = 800
-HEIGHT = 600
-running = True
-background_music_volume = 0
-background_music = pygame.mixer.Sound('assets/music/background.wav')
-background_music.set_volume(background_music_volume)
-background_music.play(-1)
-scenes = []
-
-# create the screen
-pygame.display.set_caption("Space Invaders")
-background_image = pygame.image.load("assets/images/background.png")
+WIDTH=800
+HEIGHT=600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
+pygame.display.set_caption("Space Invaders")
 
 player = Player(screen,
                 'assets/images/player.png',
                 'assets/music/laser.wav',
                 'assets/images/bullet.png')
 enemy = Enemy(screen,
-              'assets/images/enemy.png',
-              'assets/music/laser.wav',
-              'assets/images/bullet.png')
+            'assets/images/enemy.png',
+            'assets/music/laser.wav',
+            'assets/images/bullet.png')
 
-while running:
-    screen.blit(background_image, (0, 0))
-    keys = pygame.key.get_pressed()
+menu_scene = MenuScene()
+first_scene = FirstScene(background_image="assets/images/background.png", player= player, enemy=enemy)
+scenes = [menu_scene, first_scene]
+game = Game(scenes=scenes, starting_scene=0)
 
-    player.handle_x_movements(keys)
-    player.handle_wall_collisions()
-    player.handle_shot(keys)
-    player.handle_bullets()
-
-    enemy.handle_x_movements(keys)
-    enemy.handle_wall_collisions()
-
-    player.draw()
-    enemy.draw()
-
-    pygame.display.update()
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-pygame.quit()
+game.start()
