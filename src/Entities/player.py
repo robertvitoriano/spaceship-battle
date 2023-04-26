@@ -1,7 +1,7 @@
-
 import pygame
-from src.bullet import Bullet
-from src.spaceship import Spaceship
+from src.Entities.bullet import Bullet
+from src.Entities.spaceship import Spaceship
+
 class Player(Spaceship):
     def __init__(self, screen, image_path, shot_sound_path, bullet_image_path):
 

@@ -1,4 +1,4 @@
-from src.spaceship import Spaceship
+from src.Entities.spaceship import Spaceship
 import pygame
 
 
