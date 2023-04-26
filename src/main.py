@@ -1,5 +1,4 @@
 import pygame
-import os
 from src.player import Player
 from src.bullet import Bullet
 # Initialize the Pygame
@@ -20,7 +19,10 @@ pygame.display.set_caption("Space Invaders")
 background_image = pygame.image.load("assets/images/background.png")
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
-player = Player(screen)
+player = Player(screen,
+                'assets/images/player.png',
+                'assets/music/laser.wav',
+                'assets/images/bullet.png')
 
 while running:
     screen.blit(background_image, (0, 0))
