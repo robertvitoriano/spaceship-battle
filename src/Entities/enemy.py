@@ -12,9 +12,6 @@ class Enemy(Spaceship):
 
     def handle_wall_collisions(self):
         if self.x_position <= 0 or self.x_position >= self.screen_width - self.image.get_width():
-            from src.game import Game
-            game = Game.get_instance()
-            game.change_scene(0)
             self.direction = self.direction * -1
 
     def handle_shot(self, keys=None):

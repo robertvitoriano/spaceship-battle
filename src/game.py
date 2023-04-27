@@ -1,4 +1,6 @@
 import pygame
+import time
+
 from src.Entities.player import Player
 from src.Entities.enemy import Enemy
 from src.Entities.bullet import Bullet
@@ -18,10 +20,10 @@ class Game:
         self.width, self.height = 800, 600
 
     @classmethod
-    def get_instance(cls, scenes=None):
+    def get_instance(cls, scenes=None, starting_scene = 0):
         global game
         if game is None and scenes is not None:
-            game = Game(scenes, 1)
+            game = Game(scenes, starting_scene)
         return game
 
     def change_scene(self, new_scene_number):
@@ -35,6 +37,7 @@ class Game:
                 self.running = False
 
     def update(self):
+
         keys = pygame.key.get_pressed()
         if self.scenes[self.current_scene].player is not None and self.scenes[self.current_scene].enemy is not None:
             self.scenes[self.current_scene].player.handle_x_movements(keys)
@@ -42,6 +45,7 @@ class Game:
             self.scenes[self.current_scene].player.handle_shot(keys)
             self.scenes[self.current_scene].enemy.handle_x_movements(keys)
             self.scenes[self.current_scene].enemy.handle_wall_collisions()
+
 
     def draw(self):
         self.scenes[self.current_scene].draw()
@@ -56,6 +60,7 @@ class Game:
 
     def run(self):
         self.scenes[self.current_scene].play_background_music(0.5)
+
         while self.running:
             self.handle_events()
             self.update()

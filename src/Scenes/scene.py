@@ -8,7 +8,7 @@ class Scene:
     pygame.mixer.init()
     self.background_image = background_image
     self.background_music = background_music
-    self.background_music_volume = 0.5
+    self.background_music_volume = 0.1
     self.player = player
     self.enemy = enemy
     self.__screen = screen
