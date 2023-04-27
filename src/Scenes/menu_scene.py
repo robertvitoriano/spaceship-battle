@@ -1,5 +1,5 @@
 from src.Scenes.scene import Scene
-
+from src.Scenes.ui_components.quit_button import QuitButton
 import pygame
 class MenuScene(Scene):
     def __init__(self, background_image, background_music, screen):
@@ -7,6 +7,7 @@ class MenuScene(Scene):
       self.background_image = background_image
       self.background_music = background_music
       self.screen = screen
+      self.quit_button = QuitButton()
 
     def create_quit_button(self):
       quit_button = pygame.Surface((100, 50))
@@ -18,3 +19,7 @@ class MenuScene(Scene):
       if event.type == pygame.MOUSEBUTTONDOWN:
         if quit_button.get_rect().move(quit_button_pos).collidepoint(pygame.mouse.get_pos()):
             running = False
+
+    def draw(self):
+      super().draw()
+      self.create_quit_button()
