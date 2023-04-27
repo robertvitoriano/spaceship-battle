@@ -13,15 +13,17 @@ class Button(ABC):
     self.title = title
     self.screen = screen
     self.button = None
-    self.ButtonRect = None
+    self.button_rect = None
 
   def draw(self):
-    self.button = pygame.Surface((self.x, self.y))
-    self.button_rect = pygame.draw.rect(self.button, self.color , (0, 0,self.width, self.height))
+    self.button = pygame.Surface((self.width, self.height))
+    self.button_rect = pygame.draw.rect(self.button, self.color , (0, 0, self.width, self.height))
 
-    self.screen.blit(self.button, (self.width, self.height))
+    self.screen.blit(self.button, (self.x, self.y))
 
-    @abstractmethod
-    def handle_button_events(self):
-      pass
+  @abstractmethod
+  def handle_button_events(self):
+    pass
 
+  def get_button(self):
+    return self.button

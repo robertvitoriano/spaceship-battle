@@ -35,7 +35,7 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
-
+            self.scenes[self.current_scene].handle_scene_events(event)
     def update(self):
 
         keys = pygame.key.get_pressed()
@@ -45,7 +45,6 @@ class Game:
             self.scenes[self.current_scene].player.handle_shot(keys)
             self.scenes[self.current_scene].enemy.handle_x_movements(keys)
             self.scenes[self.current_scene].enemy.handle_wall_collisions()
-
 
     def draw(self):
         self.scenes[self.current_scene].draw()

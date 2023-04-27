@@ -12,3 +12,7 @@ class MenuScene(Scene):
     def draw(self):
       super().draw()
       self.quit_button.draw()
+
+    def handle_scene_events(self, event):
+      self.quit_button.handle_button_events(event)
+      pass
