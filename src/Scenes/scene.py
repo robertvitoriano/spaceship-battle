@@ -12,6 +12,7 @@ class Scene:
     self.player = player
     self.enemy = enemy
     self.__screen = screen
+    self.background_music_loaded = None
 
   def draw(self):
     background_image_loaded = pygame.image.load(self.background_image)
@@ -22,7 +23,9 @@ class Scene:
       self.enemy.draw()
 
   def play_background_music(self, background_music_volume):
-    background_music = pygame.mixer.Sound(self.background_music)
-    background_music.set_volume(self.background_music_volume)
-    background_music.play(-1)
+    self.background_music_loaded = pygame.mixer.Sound(self.background_music)
+    self.background_music_loaded.set_volume(self.background_music_volume)
+    self.background_music_loaded.play(-1)
 
+  def stop_background_music(self):
+    self.background_music_loaded.stop()

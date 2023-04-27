@@ -25,6 +25,7 @@ class Game:
         return game
 
     def change_scene(self, new_scene_number):
+        self.scenes[self.current_scene].stop_background_music()
         self.current_scene = new_scene_number
         self.scenes[self.current_scene].play_background_music(0.5)
 
