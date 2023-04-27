@@ -7,7 +7,7 @@ class MenuScene(Scene):
       self.background_image = background_image
       self.background_music = background_music
       self.screen = screen
-      self.quit_button = QuitButton(screen=self.screen,width=100, height=50,x=50, y=50, color=(255, 0, 0), title="MENU")
+      self.quit_button = QuitButton(screen=self.screen,width=100, height=50,x=50, y=50, color=(255, 0, 0), title="QUIT")
 
     def draw(self):
       super().draw()
