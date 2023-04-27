@@ -15,9 +15,6 @@ class QuitButton(Button):
                 game = Game.get_instance()
                 game.quit_game()
 
-        if event.type == pygame.MOUSEMOTION:
-            if is_hovering_button:
-                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
-            else:
-                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+        self.hover_button(event, is_hovering_button)
+
 

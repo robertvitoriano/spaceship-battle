@@ -30,13 +30,23 @@ class Button(ABC):
     self.button = pygame.Surface((self.width, self.height))
     self.button.fill(self.color)
     self.button.blit(text_surface, text_rect)
+    self.hovered = False
 
   def draw(self):
     self.screen.blit(self.button, (self.x, self.y))
 
   @abstractmethod
-  def handle_button_events(self):
+  def handle_button_events(self, event):
     pass
+
+  def hover_button(self, event, is_hovering_button):
+    if event.type == pygame.MOUSEMOTION:
+      if is_hovering_button and not self.hovered:
+          pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+          self.hovered = True
+      elif self.hovered:
+          pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+          self.hovered = False
 
   def get_button(self):
     return self.button

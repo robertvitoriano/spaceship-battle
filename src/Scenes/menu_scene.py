@@ -9,8 +9,8 @@ class MenuScene(Scene):
       self.background_image = background_image
       self.background_music = background_music
       self.screen = screen
-      self.quit_button = QuitButton(screen=self.screen,width=100, height=50,x=50, y=50, color=(255, 0, 0), title="QUIT")
-      self.start_game_button = StartGameButton(screen=self.screen,width=300, height=50,x=200, y=200, color=(255, 0, 0), title="Start Game")
+      self.start_game_button = StartGameButton(screen=self.screen,width=300, height=50,x=400, y=200, color=(255, 0, 0), title="Start Game")
+      self.quit_button = QuitButton(screen=self.screen,width=300, height=50,x=200, y=400, color=(255, 0, 0), title="Quit Game")
 
     def draw(self):
       super().draw()
@@ -18,5 +18,5 @@ class MenuScene(Scene):
       self.start_game_button.draw()
 
     def handle_scene_events(self, event):
-      self.quit_button.handle_button_events(event)
       self.start_game_button.handle_button_events(event)
+      self.quit_button.handle_button_events(event)

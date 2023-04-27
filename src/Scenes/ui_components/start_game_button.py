@@ -17,9 +17,6 @@ class StartGameButton(Button):
                 game = Game.get_instance()
                 game.change_scene(ScenesEnum.FIRST_SCENE)
 
-        if event.type == pygame.MOUSEMOTION:
-            if is_hovering_button:
-                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
-            else:
-                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+        self.hover_button(event, is_hovering_button)
+
 
