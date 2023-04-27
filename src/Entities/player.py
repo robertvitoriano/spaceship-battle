@@ -11,7 +11,6 @@ class Player(Spaceship):
         self.x_position = self.x_coordinate
         self.y_position = self.screen_height - 100
 
-
     def handle_wall_collisions(self):
         if self.x_position >= self.screen_width - self.image.get_width():
             self.right_collision = True
@@ -40,7 +39,7 @@ class Player(Spaceship):
             bullet = Bullet(bullet_x_position, bullet_y_position)
             self.bullets.append(bullet)
 
-    def handle_bullets(self):
+    def draw_bullets(self):
         new_bullets = []
 
         for bullet in self.bullets:

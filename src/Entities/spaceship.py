@@ -8,7 +8,7 @@ class Spaceship(ABC):
                  screen,
                  image_path,
                  shot_sound_path, bullet_image_path):
-
+        pygame.mixer.init()
         info = pygame.display.Info()
         self.screen_width = info.current_w
         self.screen_height = info.current_h
@@ -31,7 +31,7 @@ class Spaceship(ABC):
         self.screen.blit(self.image, (self.x_position, self.y_position))
 
     @abstractmethod
-    def handle_bullets(self):
+    def draw_bullets(self):
         pass
 
     @abstractmethod

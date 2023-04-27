@@ -2,43 +2,58 @@ import pygame
 from src.Entities.player import Player
 from src.Entities.enemy import Enemy
 from src.Entities.bullet import Bullet
+
 class Game:
-    def __init__(scenes, starting_scene, screen):
+    def __init__(self, scenes, starting_scene):
+        pygame.init()
+        pygame.mixer.init()
 
         self.__scenes = scenes
         self.__current_scene = starting_scene
         self.__running = True
+        self.running = False
+        self.clock = pygame.time.Clock()
+        self.FPS = 60
+        self.width, self.height = 800, 600
+
 
     @staticmethod
     def change_scene(new_scene_number):
         self.__current_scene = new_scene_number
+        self.__scenes[self.__current_scene].play_background_music(0.5)
 
-    def start():
-        background_music_volume = 0
-        background_music = pygame.mixer.Sound('assets/music/background.wav')
-        background_music.set_volume(background_music_volume)
-        background_music.play(-1)
+    def handle_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
 
-        # create the screen
-        background_image = pygame.image.load("assets/images/background.png")
+    def update(self):
+        keys = pygame.key.get_pressed()
 
+        self.__scenes[self.__current_scene].player.handle_x_movements(keys)
+        self.__scenes[self.__current_scene].player.handle_wall_collisions()
+        self.__scenes[self.__current_scene].player.handle_shot(keys)
+        self.__scenes[self.__current_scene].enemy.handle_x_movements(keys)
+        self.__scenes[self.__current_scene].enemy.handle_wall_collisions()
+
+    def draw(self):
+        self.__scenes[self.__current_scene].draw()
+        self.__scenes[self.__current_scene].player.draw_bullets()
+
+        # update display
+        pygame.display.update()
+
+    def stop(self):
+        self.running = False
+
+    def run(self):
+        self.__scenes[self.__current_scene].play_background_music(0.5)
         while self.__running:
-            scenes[current_scene].draw()
-            keys = pygame.key.get_pressed()
+            self.handle_events()
+            self.update()
+            self.draw()
 
-            scenes[current_scene].player.handle_x_movements(keys)
-            scenes[current_scene].player.handle_wall_collisions()
-            scenes[current_scene].player.handle_shot(keys)
-            scenes[current_scene].player.handle_bullets()
-            scenes[current_scene].enemy.handle_x_movements(keys)
-            scenes[current_scene].enemy.handle_wall_collisions()
+            self.clock.tick(self.FPS)
 
-            pygame.display.update()
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-
+        # shut down all Pygame modules
         pygame.quit()
-
-

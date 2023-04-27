@@ -18,7 +18,7 @@ class Enemy(Spaceship):
     def handle_shot(self, keys=None):
         pass
 
-    def handle_bullets(self):
+    def draw_bullets(self):
         pass
 
     def handle_x_movements(self, keys=None):
