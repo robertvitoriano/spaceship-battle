@@ -4,12 +4,20 @@ from src.game import Game
 from src.Scenes.button_enum import ButtonsEnum
 
 class QuitButton(Button):
-  def __init__(self, screen, width, height,x,y, color, title):
-    super().__init__(screen=screen,width=width, height=height,x=x,y=y, color=color, title=title)
+    def __init__(self, screen, width, height, x, y, color, title):
+        super().__init__(screen=screen, width=width, height=height, x=x, y=y, color=color, title=title)
 
-  def handle_button_events(self, event):
-    if event.type == pygame.MOUSEBUTTONDOWN:
-      button_rect = pygame.Rect(self.x, self.y, self.width, self.height)
-      if button_rect.collidepoint(pygame.mouse.get_pos()) and event.button == ButtonsEnum.LEFT_MOUSE_BUTTON.value:
-        game = Game.get_instance()
-        game.quit_game()
+    def handle_button_events(self, event):
+        button_rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        is_hovering_button = button_rect.collidepoint(pygame.mouse.get_pos())
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if is_hovering_button and event.button == ButtonsEnum.LEFT_MOUSE_BUTTON.value:
+                game = Game.get_instance()
+                game.quit_game()
+
+        if event.type == pygame.MOUSEMOTION:
+            if is_hovering_button:
+                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+            else:
+                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+
