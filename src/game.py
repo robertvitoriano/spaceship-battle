@@ -27,18 +27,20 @@ class Game:
             if event.type == pygame.QUIT:
                 self.running = False
 
-    def update(self):
-        keys = pygame.key.get_pressed()
 
-        self.__scenes[self.__current_scene].player.handle_x_movements(keys)
-        self.__scenes[self.__current_scene].player.handle_wall_collisions()
-        self.__scenes[self.__current_scene].player.handle_shot(keys)
-        self.__scenes[self.__current_scene].enemy.handle_x_movements(keys)
-        self.__scenes[self.__current_scene].enemy.handle_wall_collisions()
+    def update(self):
+        self.keys = pygame.key.get_pressed()
+        if self.__scenes[self.__current_scene].player != None and self.__scenes[self.__current_scene].enemy != None:
+            self.__scenes[self.__current_scene].player.handle_x_movements(self.keys)
+            self.__scenes[self.__current_scene].player.handle_wall_collisions()
+            self.__scenes[self.__current_scene].player.handle_shot(self.keys)
+            self.__scenes[self.__current_scene].enemy.handle_x_movements(self.keys)
+            self.__scenes[self.__current_scene].enemy.handle_wall_collisions()
 
     def draw(self):
         self.__scenes[self.__current_scene].draw()
-        self.__scenes[self.__current_scene].player.draw_bullets()
+        if self.__scenes[self.__current_scene].player != None:
+         self.__scenes[self.__current_scene].player.draw_bullets()
 
         # update display
         pygame.display.update()
