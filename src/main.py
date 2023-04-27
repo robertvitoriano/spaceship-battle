@@ -26,11 +26,10 @@ def main():
     menu_scene = MenuScene(background_image="assets/images/menu_test.png", background_music="assets/music/background.wav", screen=screen)
     first_scene = FirstScene(background_image="assets/images/background.png", background_music="assets/music/background.wav", screen=screen, player= player, enemy=enemy)
     scenes = [menu_scene, first_scene]
-    game = Game(scenes=scenes, starting_scene=1)
+
+    game = Game.get_instance(scenes)
 
     game.run()
-
-
 
 if __name__ == '__main__':
     main()
