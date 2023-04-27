@@ -28,7 +28,7 @@ def main():
         ScenesEnum.MENU_SCENE: MenuScene(background_image="assets/images/menu_test.png", background_music="assets/music/menu_music.mp3", screen=screen),
         ScenesEnum.FIRST_SCENE: FirstScene(background_image="assets/images/background.png", background_music="assets/music/background.wav", screen=screen, player= player, enemy=enemy)
     }
-    game = Game.get_instance(scenes, ScenesEnum.FIRST_SCENE)
+    game = Game.get_instance(scenes, ScenesEnum.MENU_SCENE)
 
     game.run()
 

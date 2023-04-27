@@ -7,19 +7,8 @@ class MenuScene(Scene):
       self.background_image = background_image
       self.background_music = background_music
       self.screen = screen
-      self.quit_button = QuitButton()
-
-    def create_quit_button(self):
-      quit_button = pygame.Surface((100, 50))
-      pygame.draw.rect(quit_button, (255, 0, 0), (0, 0, 100, 50))
-      quit_button_pos = (50, 50)
-      self.screen.blit(quit_button, quit_button_pos)
-
-    def handle_scene_events(self, event):
-      if event.type == pygame.MOUSEBUTTONDOWN:
-        if quit_button.get_rect().move(quit_button_pos).collidepoint(pygame.mouse.get_pos()):
-            running = False
+      self.quit_button = QuitButton(screen=self.screen,width=100, height=50,x=50, y=50, color=(255, 0, 0), title="MENU")
 
     def draw(self):
       super().draw()
-      self.create_quit_button()
+      self.quit_button.draw()

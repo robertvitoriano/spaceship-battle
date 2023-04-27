@@ -58,6 +58,10 @@ class Game:
     def stop(self):
         self.running = False
 
+    def quit_game(self):
+        self.stop()
+        pygame.quit()
+
     def run(self):
         self.scenes[self.current_scene].play_background_music(0.5)
 
