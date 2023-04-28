@@ -9,7 +9,7 @@ class MenuScene(Scene):
       self.background_image = background_image
       self.background_music = background_music
       self.screen = screen
-      self.start_game_button = StartGameButton(screen=self.screen,width=300, height=50,x=400, y=200, color=(255, 0, 0), title="Start Game")
+      self.start_game_button = StartGameButton(screen=self.screen,width=300, height=50,x=200, y=200, color=(255, 0, 0), title="Start Game")
       self.quit_button = QuitButton(screen=self.screen,width=300, height=50,x=200, y=400, color=(255, 0, 0), title="Quit Game")
 
     def draw(self):
