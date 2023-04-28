@@ -1,7 +1,7 @@
 import pygame
 from src.Entities.player import Player
 from src.Entities.enemy import Enemy
-from src.Entities.bullet import Bullet
+from src.Entities.fire import Fire
 
 class Scene():
   def __init__(self, background_image, background_music, screen, player=None, enemy=None):

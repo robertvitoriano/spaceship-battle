@@ -8,8 +8,8 @@ class Spaceship(ABC):
                  screen,
                  image_path,
                  shot_sound_path,
-                 bullet_image_path,
-                 bullet_volume
+                 fire_image_path,
+                 fire_volume
                  ):
         pygame.mixer.init()
         info = pygame.display.Info()
@@ -23,18 +23,18 @@ class Spaceship(ABC):
         self.x_position = self.screen_width/2 - self.image.get_width()
         self.y_position = self.screen_height - 100
         self.shot_sound = pygame.mixer.Sound(shot_sound_path)
-        self.bullet_image = pygame.image.load(bullet_image_path)
-        self.bullet_speed = 5
-        self.bullet_volume = bullet_volume
-        self.shot_sound.set_volume(self.bullet_volume)
-        self.bullets = []
+        self.fire_image = pygame.image.load(fire_image_path)
+        self.fire_speed = 5
+        self.fire_volume = fire_volume
+        self.shot_sound.set_volume(self.fire_volume)
+        self.fires = []
         self.screen = screen
 
     def draw(self):
         self.screen.blit(self.image, (self.x_position, self.y_position))
 
     @abstractmethod
-    def draw_bullets(self):
+    def draw_fires(self):
         pass
 
     @abstractmethod

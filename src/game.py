@@ -3,7 +3,7 @@ import time
 
 from src.Entities.player import Player
 from src.Entities.enemy import Enemy
-from src.Entities.bullet import Bullet
+from src.Entities.fire import Fire
 
 game = None
 
@@ -49,7 +49,7 @@ class Game:
     def draw(self):
         self.scenes[self.current_scene].draw()
         if self.scenes[self.current_scene].player is not None:
-            self.scenes[self.current_scene].player.draw_bullets()
+            self.scenes[self.current_scene].player.draw_fires()
 
         # update display
         pygame.display.update()

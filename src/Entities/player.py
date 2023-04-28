@@ -1,11 +1,11 @@
 import pygame
-from src.Entities.bullet import Bullet
+from src.Entities.fire import Fire
 from src.Entities.spaceship import Spaceship
 from src.Entities.directions_enum import DirectionsEnum
 class Player(Spaceship):
-    def __init__(self, screen, image_path, shot_sound_path, bullet_image_path, bullet_volume):
+    def __init__(self, screen, image_path, shot_sound_path, fire_image_path, fire_volume):
 
-        super().__init__(screen, image_path, shot_sound_path, bullet_image_path, bullet_volume)
+        super().__init__(screen, image_path, shot_sound_path, fire_image_path, fire_volume)
 
         self.x_position = self.screen_width/2 - self.image.get_width()
         self.y_position = self.screen_height - 100
@@ -33,21 +33,21 @@ class Player(Spaceship):
     def handle_shot(self, keys):
         if keys[pygame.K_SPACE]:
             self.shot_sound.play()
-            bullet_y_position = self.y_position
-            bullet_x_position = self.x_position + self.image.get_width() / 2 - self.bullet_image.get_width() / 2
-            bullet = Bullet(x=bullet_x_position, y=bullet_y_position,direction=DirectionsEnum.DOWN.value)
-            self.bullets.append(bullet)
+            fire_y_position = self.y_position
+            fire_x_position = self.x_position + self.image.get_width() / 2 - self.fire_image.get_width() / 2
+            fire = Fire(x=fire_x_position, y=fire_y_position,direction=DirectionsEnum.DOWN.value)
+            self.fires.append(fire)
 
-    def draw_bullets(self):
-        new_bullets = []
+    def draw_fires(self):
+        new_fires = []
 
-        for bullet in self.bullets:
-            bullet.update()
-            if bullet.y_position > 0:
-                self.screen.blit(self.bullet_image,
-                                    (bullet.x_position, bullet.y_position))
-                new_bullets.append(bullet)
+        for fire in self.fires:
+            fire.update()
+            if fire.y_position > 0:
+                self.screen.blit(self.fire_image,
+                                    (fire.x_position, fire.y_position))
+                new_fires.append(fire)
             else:
-                del bullet
+                del fire
 
-        self.bullets = new_bullets
+        self.fires = new_fires

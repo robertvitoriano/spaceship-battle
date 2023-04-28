@@ -1,4 +1,4 @@
-class Bullet:
+class Fire:
     def __init__(self, x, y, direction):
         self.x_position = x
         self.y_position = y
