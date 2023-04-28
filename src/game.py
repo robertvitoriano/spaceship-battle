@@ -29,7 +29,7 @@ class Game:
     def change_scene(self, new_scene_number):
         self.scenes[self.current_scene].stop_background_music()
         self.current_scene = new_scene_number
-        self.scenes[self.current_scene].play_background_music(0.5)
+        self.scenes[self.current_scene].play_background_music(0.1)
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -62,7 +62,7 @@ class Game:
         pygame.quit()
 
     def run(self):
-        self.scenes[self.current_scene].play_background_music(0.5)
+        self.scenes[self.current_scene].play_background_music(0.1)
 
         while self.running:
             self.handle_events()

@@ -7,7 +7,10 @@ class Spaceship(ABC):
     def __init__(self,
                  screen,
                  image_path,
-                 shot_sound_path, bullet_image_path):
+                 shot_sound_path,
+                 bullet_image_path,
+                 bullet_volume
+                 ):
         pygame.mixer.init()
         info = pygame.display.Info()
         self.screen_width = info.current_w
@@ -22,7 +25,7 @@ class Spaceship(ABC):
         self.shot_sound = pygame.mixer.Sound(shot_sound_path)
         self.bullet_image = pygame.image.load(bullet_image_path)
         self.bullet_speed = 5
-        self.bullet_volume = 0.6
+        self.bullet_volume = bullet_volume
         self.shot_sound.set_volume(self.bullet_volume)
         self.bullets = []
         self.screen = screen

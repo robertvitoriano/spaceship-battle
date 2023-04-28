@@ -1,14 +1,13 @@
 import pygame
 from src.Entities.bullet import Bullet
 from src.Entities.spaceship import Spaceship
-
+from src.Entities.directions_enum import DirectionsEnum
 class Player(Spaceship):
-    def __init__(self, screen, image_path, shot_sound_path, bullet_image_path):
+    def __init__(self, screen, image_path, shot_sound_path, bullet_image_path, bullet_volume):
 
-        super().__init__(screen, image_path, shot_sound_path, bullet_image_path)
+        super().__init__(screen, image_path, shot_sound_path, bullet_image_path, bullet_volume)
 
-        self.x_coordinate = self.screen_width/2 - self.image.get_width()
-        self.x_position = self.x_coordinate
+        self.x_position = self.screen_width/2 - self.image.get_width()
         self.y_position = self.screen_height - 100
 
     def handle_wall_collisions(self):
@@ -29,14 +28,14 @@ class Player(Spaceship):
         if keys[pygame.K_RIGHT] and not self.right_collision:
             self.speed += self.speed_rate
 
-        self.x_position = self.x_coordinate + self.speed
+        self.x_position =  self.speed
 
     def handle_shot(self, keys):
         if keys[pygame.K_SPACE]:
             self.shot_sound.play()
             bullet_y_position = self.y_position
             bullet_x_position = self.x_position + self.image.get_width() / 2 - self.bullet_image.get_width() / 2
-            bullet = Bullet(bullet_x_position, bullet_y_position)
+            bullet = Bullet(x=bullet_x_position, y=bullet_y_position,direction=DirectionsEnum.DOWN.value)
             self.bullets.append(bullet)
 
     def draw_bullets(self):
