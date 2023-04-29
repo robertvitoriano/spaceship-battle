@@ -82,7 +82,7 @@ class Game:
                                                 background_speed=15),
 
                 ScenesEnum.FIRST_SCENE: FirstScene(background_image="assets/images/background.png",
-                                                background_music="assets/music/background.wav",
+                                                background_music="assets/music/start.wav",
                                                 screen=screen,
                                                 player= player,
                                                 background_music_volume=main_volume,
