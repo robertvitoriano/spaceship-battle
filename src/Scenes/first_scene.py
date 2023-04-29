@@ -1,5 +1,6 @@
 from src.Scenes.scene import Scene
 from src.Entities.enemy import Enemy
+import pygame
 
 class FirstScene(Scene):
     def __init__(self, background_image, background_music, screen, player, background_music_volume):
@@ -45,18 +46,20 @@ class FirstScene(Scene):
         for enemy in self.enemies:
             enemy.handle_x_movements(keys)
             enemy.handle_wall_collisions()
+        self.handle_enemy_hit()
 
     def draw_enemies(self):
         for enemy in self.enemies:
             enemy.draw()
 
 
-def handle_enemy_hit(self):
-    fires = self.player.get_fires()
-    enemy_group = pygame.sprite.Group(self.enemies) # create a group of all enemies
-    for i, fire in enumerate(fires):
-        collisions = pygame.sprite.spritecollide(fire, enemy_group, True)
-        for enemy in collisions:
-            self.player.remove_fire(i)
-            fire.play_hit_sound()
-            self.enemies.remove(enemy) # remove the enemy from the list
+    def handle_enemy_hit(self):
+        fires = self.player.get_fires()
+        enemy_group = pygame.sprite.Group(self.enemies)
+        for i, fire in enumerate(fires):
+            collisions = pygame.sprite.spritecollide(fire, enemy_group, True)
+            for enemy in collisions:
+                self.player.remove_fire(i)
+                fire.play_hit_sound()
+                self.enemies.remove(enemy)
+
