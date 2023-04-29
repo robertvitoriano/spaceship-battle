@@ -45,7 +45,7 @@ class Game:
             collision = pygame.sprite.spritecollide(fire, enemy_group, True)
 
             if collision:
-                print("HAS COLLIDED")
+                fire.play_hit_sound()
                 self.scenes[self.current_scene].player.remove_fire(i)
 
     def update(self):
