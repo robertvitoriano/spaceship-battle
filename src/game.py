@@ -54,7 +54,6 @@ class Game:
     def quit_game(self):
         self.stop()
 
-    @classmethod
     def restart_game(self):
             self.scenes[self.current_scene].stop_background_music()
             global game

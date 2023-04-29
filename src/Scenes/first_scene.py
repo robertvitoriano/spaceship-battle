@@ -12,8 +12,8 @@ class FirstScene(Scene):
         self.player = player
         self.screen = screen
         self.dificult_y_rate = 10
-        self.number_of_enemy_waves = random.randint(10, 20)
-        self.max_number_of_enemies_per_waves = random.randint(5, 15)
+        self.number_of_enemy_waves = random.randint(1, 2)
+        self.max_number_of_enemies_per_waves = random.randint(5, 6)
         self.current_wave_index = 0
         self.quantities_per_wave = []
         self.get_quantities_per_wave()
