@@ -18,7 +18,7 @@ def main():
     player = Player(screen,
                     'assets/images/player.png',
                     'assets/music/laser.wav',
-                    'assets/images/bullet.png', 0.1)
+                    'assets/images/player_laser.png', 0.1)
     enemy = Enemy(screen,
                 'assets/images/enemy.png',
                 'assets/music/laser.wav',

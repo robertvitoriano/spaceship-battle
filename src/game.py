@@ -36,6 +36,18 @@ class Game:
             if event.type == pygame.QUIT:
                 self.running = False
             self.scenes[self.current_scene].handle_scene_events(event)
+
+    def handle_enemy_hit(self):
+        fires = self.scenes[self.current_scene].player.get_fires()
+        enemy_group = pygame.sprite.Group()
+        enemy_group.add(self.scenes[self.current_scene].enemy)
+        for i, fire in  enumerate(fires):
+            collision = pygame.sprite.spritecollide(fire, enemy_group, True)
+
+            if collision:
+                print("HAS COLLIDED")
+                self.scenes[self.current_scene].player.remove_fire(i)
+
     def update(self):
 
         keys = pygame.key.get_pressed()
@@ -45,6 +57,7 @@ class Game:
             self.scenes[self.current_scene].player.handle_shot(keys)
             self.scenes[self.current_scene].enemy.handle_x_movements(keys)
             self.scenes[self.current_scene].enemy.handle_wall_collisions()
+            self.handle_enemy_hit()
 
     def draw(self):
         self.scenes[self.current_scene].draw()

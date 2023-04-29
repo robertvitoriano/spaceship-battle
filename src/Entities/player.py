@@ -9,6 +9,7 @@ class Player(Spaceship):
 
         self.x_position = self.screen_width/2 - self.image.get_width()
         self.y_position = self.screen_height - 100
+        self.fires = []
 
     def handle_wall_collisions(self):
         if self.x_position >= self.screen_width - self.image.get_width():
@@ -35,7 +36,7 @@ class Player(Spaceship):
             self.shot_sound.play()
             fire_y_position = self.y_position
             fire_x_position = self.x_position + self.image.get_width() / 2 - self.fire_image.get_width() / 2
-            fire = Fire(x=fire_x_position, y=fire_y_position,direction=DirectionsEnum.DOWN.value)
+            fire = Fire(x=fire_x_position, y=fire_y_position,direction=DirectionsEnum.DOWN.value, fire_image= self.fire_image, screen=self.screen)
             self.fires.append(fire)
 
     def draw_fires(self):
@@ -44,10 +45,17 @@ class Player(Spaceship):
         for fire in self.fires:
             fire.update()
             if fire.y_position > 0:
-                self.screen.blit(self.fire_image,
-                                    (fire.x_position, fire.y_position))
+                fire.draw(fire.x_position, fire.y_position)
                 new_fires.append(fire)
             else:
                 del fire
 
         self.fires = new_fires
+
+
+
+    def get_fires(self):
+        return self.fires
+
+    def remove_fire(self,fire_index):
+        del self.fires[fire_index]

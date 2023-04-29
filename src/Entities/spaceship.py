@@ -2,15 +2,9 @@ import pygame
 from abc import ABC, abstractmethod
 
 
-
-class Spaceship(ABC):
-    def __init__(self,
-                 screen,
-                 image_path,
-                 shot_sound_path,
-                 fire_image_path,
-                 fire_volume
-                 ):
+class Spaceship(pygame.sprite.Sprite, ABC):
+    def __init__(self, screen, image_path, shot_sound_path, fire_image_path, fire_volume):
+        super().__init__()
         pygame.mixer.init()
         info = pygame.display.Info()
         self.screen_width = info.current_w
