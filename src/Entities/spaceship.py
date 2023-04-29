@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 
 class Spaceship(pygame.sprite.Sprite, ABC):
-    def __init__(self, screen, image_path, shot_sound_path, fire_image_path, fire_volume):
+    def __init__(self, screen, image_path, shot_sound_path, fire_image_path, hit_image_path = None, fire_volume = 0.5):
         super().__init__()
         pygame.mixer.init()
         info = pygame.display.Info()
@@ -18,11 +18,14 @@ class Spaceship(pygame.sprite.Sprite, ABC):
         self.y_position = self.screen_height - 100
         self.shot_sound = pygame.mixer.Sound(shot_sound_path)
         self.fire_image = pygame.image.load(fire_image_path)
+        self.hit_image = pygame.image.load(hit_image_path)
         self.fire_speed = 5
         self.fire_volume = fire_volume
         self.shot_sound.set_volume(self.fire_volume)
         self.fires = []
         self.screen = screen
+        self.hit_image_path = hit_image_path
+        self.was_hit = False
 
     def draw(self):
         self.screen.blit(self.image, (self.x_position, self.y_position))
@@ -42,3 +45,7 @@ class Spaceship(pygame.sprite.Sprite, ABC):
     @abstractmethod
     def handle_shot(self, keys=None):
         pass
+
+    def draw_hit_image(self):
+        self.screen.blit(self.hit_image, (self.x_position, self.y_position))
+

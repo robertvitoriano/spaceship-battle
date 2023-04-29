@@ -13,7 +13,6 @@ class Fire(pygame.sprite.Sprite):
         self.hit_sound.set_volume(0.1)
 
 
-
     def update(self):
         self.y_position += self.speed * self.direction
 

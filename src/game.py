@@ -46,15 +46,17 @@ class Game:
 
             if collision:
                 fire.play_hit_sound()
+                del self.scenes[self.current_scene].enemy
                 self.scenes[self.current_scene].player.remove_fire(i)
 
     def update(self):
 
         keys = pygame.key.get_pressed()
-        if self.scenes[self.current_scene].player is not None and self.scenes[self.current_scene].enemy is not None:
+        if self.scenes[self.current_scene].player is not None:
             self.scenes[self.current_scene].player.handle_x_movements(keys)
             self.scenes[self.current_scene].player.handle_wall_collisions()
             self.scenes[self.current_scene].player.handle_shot(keys)
+        if hasattr(self.scenes[self.current_scene], 'enemy') and self.scenes[self.current_scene].enemy is not None:
             self.scenes[self.current_scene].enemy.handle_x_movements(keys)
             self.scenes[self.current_scene].enemy.handle_wall_collisions()
             self.handle_enemy_hit()

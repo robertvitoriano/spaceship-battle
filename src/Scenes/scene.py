@@ -19,7 +19,7 @@ class Scene():
     self.__screen.blit(background_image_loaded, (0, 0))
     if self.player is not None:
       self.player.draw()
-    if self.enemy is not None:
+    if hasattr(self, 'enemy') and self.enemy is not None:
       self.enemy.draw()
 
   def play_background_music(self, background_music_volume):
