@@ -18,6 +18,8 @@ class Player(Spaceship):
         self.live_margin = 15
         self.live_distance = self.live.get_width() + self.live_margin
         self.remaining_lives = lives_count
+        self.rect = pygame.Rect(self.x_position, self.y_position, self.image.get_width(), self.image.get_height())
+
 
     def handle_wall_collisions(self):
         if self.x_position >= self.screen_width - self.image.get_width():
@@ -77,7 +79,12 @@ class Player(Spaceship):
             self.screen.blit(self.live, (live_x_position, self.live_y_position))
 
     def decrease_lives(self):
-        self.remaining_lives -=1
+           self.remaining_lives -=1
+
+    def get_remaining_lives(self):
+        return remaining_lives
+
+
 
 
 

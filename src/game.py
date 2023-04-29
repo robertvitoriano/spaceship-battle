@@ -43,7 +43,7 @@ class Game:
 
     def draw(self):
         self.scenes[self.current_scene].draw()
-        # update display
+
         pygame.display.update()
 
     def stop(self):

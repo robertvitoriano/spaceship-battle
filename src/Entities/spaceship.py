@@ -27,6 +27,7 @@ class Spaceship(pygame.sprite.Sprite, ABC):
         self.hit_image_path = hit_image_path
         self.was_hit = False
 
+
     def draw(self):
         self.screen.blit(self.image, (self.x_position, self.y_position))
     def destroy(self):
