@@ -26,7 +26,8 @@ class FirstScene(Scene):
                 'assets/images/bullet.png',
                 'assets/images/player_hit.png',
                 0.1,
-                life=10
+                life=10,
+                id=i
             ))
 
         return enemies

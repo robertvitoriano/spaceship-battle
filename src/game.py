@@ -42,8 +42,6 @@ class Game:
 
     def draw(self):
         self.scenes[self.current_scene].draw()
-
-
         # update display
         pygame.display.update()
 
@@ -57,8 +55,8 @@ class Game:
         self.scenes[self.current_scene].play_background_music(self.main_volume)
 
         while self.running:
-            self.update()
             self.draw()
+            self.update()
 
             self.clock.tick(self.FPS)
 
