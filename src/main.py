@@ -7,7 +7,6 @@ from src.Scenes.menu_scene import MenuScene
 from src.Scenes.first_scene import FirstScene
 from src.Scenes.scenes_enum import ScenesEnum
 
-
 def main():
     WIDTH=800
     HEIGHT=600
@@ -17,11 +16,13 @@ def main():
     main_volume = 0.4
 
     player = Player(screen,
-                    'assets/images/player.png',
-                    'assets/music/laser.wav',
-                    'assets/images/player_laser.png',
-                    'assets/images/player_hit.png',
-                    0.1)
+                    image_path='assets/images/player.png',
+                    shot_sound_path='assets/music/laser.wav',
+                    fire_image_path='assets/images/player_laser.png',
+                    hit_image_path='assets/images/player_hit.png',
+                    live_image_path='assets/images/heart_image.png',
+                    fire_volume=0.1,
+                    lives_count=5)
 
 
     scenes = {

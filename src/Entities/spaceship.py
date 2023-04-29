@@ -29,6 +29,8 @@ class Spaceship(pygame.sprite.Sprite, ABC):
 
     def draw(self):
         self.screen.blit(self.image, (self.x_position, self.y_position))
+    def destroy(self):
+        pass
 
     @abstractmethod
     def draw_fires(self):

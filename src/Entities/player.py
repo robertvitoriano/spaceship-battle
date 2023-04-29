@@ -3,13 +3,21 @@ from src.Entities.fire import Fire
 from src.Entities.spaceship import Spaceship
 from src.Entities.directions_enum import DirectionsEnum
 class Player(Spaceship):
-    def __init__(self, screen, image_path, shot_sound_path, fire_image_path, hit_image_path, fire_volume):
+    def __init__(self, screen, image_path, shot_sound_path, fire_image_path, hit_image_path, fire_volume, live_image_path, lives_count):
 
         super().__init__(screen, image_path, shot_sound_path, fire_image_path,hit_image_path, fire_volume)
 
         self.x_position = self.screen_width/2 - self.image.get_width()
         self.y_position = self.screen_height - 100
         self.fires = []
+        self.lives_count = lives_count
+        self.live_y_position = 100
+        self.live_image = pygame.image.load(live_image_path)
+        self.live = pygame.transform.scale(self.live_image, (64,64))
+        self.live_x_position = 20
+        self.live_margin = 15
+        self.live_distance = self.live.get_width() + self.live_margin
+        self.remaining_lives = lives_count
 
     def handle_wall_collisions(self):
         if self.x_position >= self.screen_width - self.image.get_width():
@@ -56,10 +64,20 @@ class Player(Spaceship):
 
         self.fires = new_fires
 
-
-
     def get_fires(self):
         return self.fires
 
     def remove_fire(self,fire_index):
         del self.fires[fire_index]
+
+    def draw_lives(self):
+        for i in range(self.remaining_lives):
+            live_x_position = self.live_x_position + (self.live_distance * i)
+            self.screen.blit(self.live, (live_x_position, self.live_y_position))
+
+    def decrease_lives(self):
+        self.remaining_lives -=1
+
+
+
+

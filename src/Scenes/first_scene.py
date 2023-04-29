@@ -10,11 +10,13 @@ class FirstScene(Scene):
         self.player = player
         self.screen = screen
         self.enemies = self.get_enemies()
+        self.dificult_y_rate = 10
 
     def draw(self):
         super().draw()
         self.draw_enemies()
         self.player.draw_fires()
+        self.player.draw_lives()
 
 
     def get_enemies(self):
@@ -28,7 +30,8 @@ class FirstScene(Scene):
                 'assets/images/player_hit.png',
                 0.1,
                 life=10,
-                id=i
+                id=i,
+                dificult_y_rate=10
             ))
 
         return enemies
@@ -46,6 +49,9 @@ class FirstScene(Scene):
         for enemy in self.enemies:
             enemy.handle_x_movements(keys)
             enemy.handle_wall_collisions()
+            if(enemy.is_enemy_out_screen()):
+                self.enemies.remove(enemy)
+                self.player.decrease_lives()
         self.handle_enemy_hit()
 
     def draw_enemies(self):
