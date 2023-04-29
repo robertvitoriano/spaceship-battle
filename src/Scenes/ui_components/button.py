@@ -1,11 +1,5 @@
 import pygame
 from src.Scenes.button_enum import ButtonsEnum
-from src.game import Game
-from abc import ABC, abstractmethod
-
-import pygame
-from src.Scenes.button_enum import ButtonsEnum
-from src.game import Game
 from abc import ABC, abstractmethod
 
 class Button(ABC):

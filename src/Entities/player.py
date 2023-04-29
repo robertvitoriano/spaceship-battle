@@ -82,7 +82,7 @@ class Player(Spaceship):
            self.remaining_lives -=1
 
     def get_remaining_lives(self):
-        return remaining_lives
+        return self.remaining_lives
 
 
 

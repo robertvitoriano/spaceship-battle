@@ -1,7 +1,6 @@
 from src.Scenes.scene import Scene
 from src.Entities.enemy import Enemy
 from src.Scenes.scenes_enum import ScenesEnum
-from src.game import Game
 import pygame
 import random
 
@@ -28,10 +27,12 @@ class FirstScene(Scene):
 
 
     def get_current_wave_enemies(self):
+        from src.game import Game
+
         enemies = []
         if self.current_wave_index == len(self.quantities_per_wave) - 1:
             game = Game.get_instance()
-            game.change_scene(ScenesEnum.MENU_SCENE)
+            game.restart_game()
 
         for i in range(0,self.quantities_per_wave[self.current_wave_index]):
             enemies.append(Enemy(

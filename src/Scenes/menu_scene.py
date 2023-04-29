@@ -1,7 +1,6 @@
 from src.Scenes.scene import Scene
 from src.Scenes.ui_components.quit_button import QuitButton
 from src.Scenes.ui_components.start_game_button import StartGameButton
-from src.game import Game
 
 import pygame
 class MenuScene(Scene):
