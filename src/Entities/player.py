@@ -31,12 +31,15 @@ class Player(Spaceship):
 
         self.x_position =  self.speed
 
+    def get_hit_volume(self):
+        return self.fire_volume*4
+
     def handle_shot(self, keys):
         if keys[pygame.K_SPACE]:
             self.shot_sound.play()
             fire_y_position = self.y_position
             fire_x_position = self.x_position + self.image.get_width() / 2 - self.fire_image.get_width() / 2
-            fire = Fire(x=fire_x_position, y=fire_y_position,direction=DirectionsEnum.DOWN.value, fire_image= self.fire_image, screen=self.screen)
+            fire = Fire(x=fire_x_position, y=fire_y_position,direction=DirectionsEnum.DOWN.value, fire_image= self.fire_image, screen=self.screen, hit_volume=self.get_hit_volume())
             self.fires.append(fire)
 
     def draw_fires(self):

@@ -8,7 +8,7 @@ from src.Entities.fire import Fire
 game = None
 
 class Game:
-    def __init__(self, scenes, starting_scene):
+    def __init__(self, scenes, starting_scene, main_volume):
         pygame.init()
         pygame.mixer.init()
 
@@ -18,18 +18,19 @@ class Game:
         self.clock = pygame.time.Clock()
         self.FPS = 60
         self.width, self.height = 800, 600
+        self.main_volume = main_volume
 
     @classmethod
-    def get_instance(cls, scenes=None, starting_scene = 0):
+    def get_instance(cls, scenes=None, starting_scene = 0, main_volume = 0.4):
         global game
         if game is None and scenes is not None:
-            game = Game(scenes, starting_scene)
+            game = Game(scenes=scenes, starting_scene=starting_scene, main_volume=main_volume)
         return game
 
     def change_scene(self, new_scene_number):
         self.scenes[self.current_scene].stop_background_music()
         self.current_scene = new_scene_number
-        self.scenes[self.current_scene].play_background_music(0.1)
+        self.scenes[self.current_scene].play_background_music(self.main_volume)
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -45,9 +46,9 @@ class Game:
             collision = pygame.sprite.spritecollide(fire, enemy_group, True)
 
             if collision:
+                self.scenes[self.current_scene].player.remove_fire(i)
                 fire.play_hit_sound()
                 del self.scenes[self.current_scene].enemy
-                self.scenes[self.current_scene].player.remove_fire(i)
 
     def update(self):
 
@@ -77,7 +78,7 @@ class Game:
         pygame.quit()
 
     def run(self):
-        self.scenes[self.current_scene].play_background_music(0.1)
+        self.scenes[self.current_scene].play_background_music(self.main_volume)
 
         while self.running:
             self.handle_events()

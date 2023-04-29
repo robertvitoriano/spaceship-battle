@@ -4,8 +4,8 @@ from src.Scenes.ui_components.start_game_button import StartGameButton
 
 import pygame
 class MenuScene(Scene):
-    def __init__(self, background_image, background_music, screen):
-      super().__init__(background_image=background_image, background_music=background_music, screen=screen)
+    def __init__(self, background_image, background_music, screen, background_music_volume):
+      super().__init__(background_image=background_image, background_music=background_music, screen=screen, background_music_volume=background_music_volume)
       self.background_image = background_image
       self.background_music = background_music
       self.screen = screen

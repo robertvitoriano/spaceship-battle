@@ -1,6 +1,6 @@
 import pygame
 class Fire(pygame.sprite.Sprite):
-    def __init__(self, x, y, direction,fire_image, rect = None, screen = None ):
+    def __init__(self, x, y, direction,fire_image, rect = None, screen = None, hit_volume = 0.4 ):
         self.x_position = x
         self.y_position = y
         self.speed = 5
@@ -10,7 +10,7 @@ class Fire(pygame.sprite.Sprite):
         self.image = self.screen.blit(self.fire_image,(x, y))
         self.rect = pygame.Rect(x, y, fire_image.get_width(), fire_image.get_height())
         self.hit_sound = pygame.mixer.Sound('assets/music/player_laser_hit_sound.mp3')
-        self.hit_sound.set_volume(0.1)
+        self.hit_sound.set_volume(hit_volume)
 
 
     def update(self):

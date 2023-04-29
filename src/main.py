@@ -14,6 +14,7 @@ def main():
 
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Space Invaders")
+    main_volume = 0.4
 
     player = Player(screen,
                     'assets/images/player.png',
@@ -30,10 +31,10 @@ def main():
                 )
 
     scenes = {
-        ScenesEnum.MENU_SCENE: MenuScene(background_image="assets/images/menu_background.png", background_music="assets/music/menu_music.mp3", screen=screen, ),
-        ScenesEnum.FIRST_SCENE: FirstScene(background_image="assets/images/background.png", background_music="assets/music/background.wav", screen=screen, player= player, enemy=enemy)
+        ScenesEnum.MENU_SCENE: MenuScene(background_image="assets/images/menu_background.png", background_music="assets/music/menu_music.mp3", screen=screen,background_music_volume=main_volume ),
+        ScenesEnum.FIRST_SCENE: FirstScene(background_image="assets/images/background.png", background_music="assets/music/background.wav", screen=screen, player= player, enemy=enemy, background_music_volume=main_volume)
     }
-    game = Game.get_instance(scenes, ScenesEnum.MENU_SCENE)
+    game = Game.get_instance(scenes, ScenesEnum.MENU_SCENE, main_volume=main_volume)
 
     game.run()
 

@@ -4,11 +4,11 @@ from src.Entities.enemy import Enemy
 from src.Entities.fire import Fire
 
 class Scene():
-  def __init__(self, background_image, background_music, screen, player=None, enemy=None):
+  def __init__(self, background_image, background_music, screen, player=None, enemy=None, background_music_volume = 0.4):
     pygame.mixer.init()
     self.background_image = background_image
     self.background_music = background_music
-    self.background_music_volume = 0.1
+    self.background_music_volume = background_music_volume
     self.player = player
     self.enemy = enemy
     self.__screen = screen
