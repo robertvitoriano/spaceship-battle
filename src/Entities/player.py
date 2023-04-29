@@ -23,6 +23,7 @@ class Player(Spaceship):
             self.left_collision = False
 
     def handle_x_movements(self, keys):
+
         if keys[pygame.K_LEFT] and not self.left_collision:
             self.speed -= self.speed_rate
 

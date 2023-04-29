@@ -1,14 +1,16 @@
 from src.Entities.spaceship import Spaceship
 import pygame
-
+import random
 class Enemy(Spaceship):
-    def __init__(self, screen, image_path, shot_sound_path, fire_image_path, hit_image_path, fire_volume):
+    def __init__(self, screen, image_path, shot_sound_path, fire_image_path, hit_image_path, fire_volume, life = 10):
         super().__init__(screen, image_path, shot_sound_path, fire_image_path, hit_image_path, fire_volume)
 
-        self.x_position = self.screen_width / 2 - self.image.get_width()
+        self.x_position =  random.randint(0, self.screen_width - self.image.get_width())
+        print("Enemy startin position "+str(self.x_position))
         self.y_position = 100
         self.direction = 1
         self.rect = pygame.Rect(self.x_position, self.y_position, self.image.get_width(), self.image.get_height())
+        self.life = life
 
 
     def handle_wall_collisions(self):
@@ -26,5 +28,6 @@ class Enemy(Spaceship):
         self.speed += self.speed_rate * self.direction
         self.x_position = self.speed
         self.rect = pygame.Rect(self.x_position, self.y_position, self.image.get_width(), self.image.get_height())
+
 
 

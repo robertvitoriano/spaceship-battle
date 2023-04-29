@@ -1,6 +1,7 @@
 from src.Scenes.scene import Scene
 from src.Scenes.ui_components.quit_button import QuitButton
 from src.Scenes.ui_components.start_game_button import StartGameButton
+from src.game import Game
 
 import pygame
 class MenuScene(Scene):
@@ -19,6 +20,6 @@ class MenuScene(Scene):
       self.quit_button.draw()
       self.start_game_button.draw()
 
-    def handle_scene_events(self, event):
-      self.start_game_button.handle_button_events(event)
-      self.quit_button.handle_button_events(event)
+    def handle_scene_events(self, events, keys = None):
+      self.start_game_button.handle_button_events(events)
+      self.quit_button.handle_button_events(events)

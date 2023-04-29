@@ -22,17 +22,11 @@ def main():
                     'assets/images/player_laser.png',
                     'assets/images/player_hit.png',
                     0.1)
-    enemy = Enemy(screen,
-                'assets/images/enemy.png',
-                'assets/music/laser.wav',
-                'assets/images/bullet.png',
-                'assets/images/player_hit.png',
-                0.1
-                )
+
 
     scenes = {
         ScenesEnum.MENU_SCENE: MenuScene(background_image="assets/images/menu_background.png", background_music="assets/music/menu_music.mp3", screen=screen,background_music_volume=main_volume ),
-        ScenesEnum.FIRST_SCENE: FirstScene(background_image="assets/images/background.png", background_music="assets/music/background.wav", screen=screen, player= player, enemy=enemy, background_music_volume=main_volume)
+        ScenesEnum.FIRST_SCENE: FirstScene(background_image="assets/images/background.png", background_music="assets/music/background.wav", screen=screen, player= player, background_music_volume=main_volume)
     }
     game = Game.get_instance(scenes, ScenesEnum.MENU_SCENE, main_volume=main_volume)
 

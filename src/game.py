@@ -32,40 +32,17 @@ class Game:
         self.current_scene = new_scene_number
         self.scenes[self.current_scene].play_background_music(self.main_volume)
 
-    def handle_events(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.running = False
-            self.scenes[self.current_scene].handle_scene_events(event)
-
-    def handle_enemy_hit(self):
-        fires = self.scenes[self.current_scene].player.get_fires()
-        enemy_group = pygame.sprite.Group()
-        enemy_group.add(self.scenes[self.current_scene].enemy)
-        for i, fire in  enumerate(fires):
-            collision = pygame.sprite.spritecollide(fire, enemy_group, True)
-
-            if collision:
-                self.scenes[self.current_scene].player.remove_fire(i)
-                fire.play_hit_sound()
-                del self.scenes[self.current_scene].enemy
-
     def update(self):
-
         keys = pygame.key.get_pressed()
-        if self.scenes[self.current_scene].player is not None:
-            self.scenes[self.current_scene].player.handle_x_movements(keys)
-            self.scenes[self.current_scene].player.handle_wall_collisions()
-            self.scenes[self.current_scene].player.handle_shot(keys)
-        if hasattr(self.scenes[self.current_scene], 'enemy') and self.scenes[self.current_scene].enemy is not None:
-            self.scenes[self.current_scene].enemy.handle_x_movements(keys)
-            self.scenes[self.current_scene].enemy.handle_wall_collisions()
-            self.handle_enemy_hit()
+        events = pygame.event.get()
+        self.scenes[self.current_scene].handle_scene_events(events,keys)
+        for event in events:
+            if event.type == pygame.QUIT:
+                self.quit_game()
 
     def draw(self):
         self.scenes[self.current_scene].draw()
-        if self.scenes[self.current_scene].player is not None:
-            self.scenes[self.current_scene].player.draw_fires()
+
 
         # update display
         pygame.display.update()
@@ -75,13 +52,11 @@ class Game:
 
     def quit_game(self):
         self.stop()
-        pygame.quit()
 
     def run(self):
         self.scenes[self.current_scene].play_background_music(self.main_volume)
 
         while self.running:
-            self.handle_events()
             self.update()
             self.draw()
 
