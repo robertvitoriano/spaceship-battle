@@ -7,7 +7,7 @@ class Enemy(Spaceship):
 
         self.x_position =  random.randint(0, self.screen_width - self.image.get_width())
         self.id = id
-        self.y_position = 100
+        self.y_position = 0
         self.direction = 1
         self.rect = pygame.Rect(self.x_position, self.y_position, self.image.get_width(), self.image.get_height())
         self.life = life

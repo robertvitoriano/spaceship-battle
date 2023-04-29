@@ -11,7 +11,7 @@ class Player(Spaceship):
         self.y_position = self.screen_height - 100
         self.fires = []
         self.lives_count = lives_count
-        self.live_y_position = 100
+        self.live_y_position = 0
         self.live_image = pygame.image.load(live_image_path)
         self.live = pygame.transform.scale(self.live_image, (64,64))
         self.live_x_position = 20
