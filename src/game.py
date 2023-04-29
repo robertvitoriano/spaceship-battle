@@ -4,6 +4,7 @@ import time
 from src.Entities.player import Player
 from src.Entities.enemy import Enemy
 from src.Entities.fire import Fire
+from src.Scenes.scenes_enum import ScenesEnum
 
 game = None
 

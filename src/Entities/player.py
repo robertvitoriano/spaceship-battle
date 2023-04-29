@@ -68,7 +68,8 @@ class Player(Spaceship):
         return self.fires
 
     def remove_fire(self,fire_index):
-        del self.fires[fire_index]
+        if(fire_index< len(self.fires)):
+         del self.fires[fire_index]
 
     def draw_lives(self):
         for i in range(self.remaining_lives):
