@@ -73,7 +73,7 @@ class Game:
 
             screen = pygame.display.set_mode((WIDTH, HEIGHT))
             pygame.display.set_caption("Space Invaders")
-            main_volume = 0.3
+            main_volume = 0
 
             player = Player(screen,
                             image_path='assets/images/player.png',

@@ -3,7 +3,7 @@ class Fire(pygame.sprite.Sprite):
     def __init__(self, x, y, direction,fire_image, rect = None, screen = None, hit_volume = 0.4 ):
         self.x_position = x
         self.y_position = y
-        self.speed = 5
+        self.speed = 100
         self.direction = direction
         self.fire_image = fire_image
         self.screen = screen

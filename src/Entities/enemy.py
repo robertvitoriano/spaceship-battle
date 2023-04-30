@@ -2,8 +2,8 @@ from src.Entities.spaceship import Spaceship
 import pygame
 import random
 class Enemy(Spaceship):
-    def __init__(self, screen, image_path, shot_sound_path, fire_image_path, hit_image_path, fire_volume, id,lives = 2, dificult_y_rate = 2):
-        super().__init__(screen, image_path, shot_sound_path, fire_image_path, hit_image_path, fire_volume, lives = lives)
+    def __init__(self, screen, image_path, shot_sound_path, fire_image_path, hit_image_path, fire_volume, id,lives = 2, dificult_y_rate = 2, speed_rate=5):
+        super().__init__(screen, image_path, shot_sound_path, fire_image_path, hit_image_path, fire_volume, lives = lives, speed_rate=speed_rate)
 
         self.x_position = random.randint(0, self.screen_width - self.image.get_width())
         self.id = id
@@ -12,6 +12,7 @@ class Enemy(Spaceship):
         self.rect = pygame.Rect(self.x_position, self.y_position, self.image.get_width(), self.image.get_height())
         self.speed_rate_y = 5 * dificult_y_rate
         self.is_out_screen = False
+        self.point_to_get_down = random.randint(0, self.image.get_width())
 
 
     def handle_wall_collisions(self):
@@ -43,6 +44,10 @@ class Enemy(Spaceship):
 
     def get_enemy_id(self):
         return self.id
+
+    def handle_hit(self):
+        self.change_to_hit_image()
+
 
 
 

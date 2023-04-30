@@ -18,7 +18,6 @@ class FirstScene(Scene):
         self.current_wave_index = 0
         self.quantities_per_wave = []
         self.get_quantities_per_wave()
-        self.collided_enemies_ids = []
 
 
     def draw(self):
@@ -46,7 +45,8 @@ class FirstScene(Scene):
                 0.1,
                 lives=2,
                 id=i,
-                dificult_y_rate= random.randint(10, self.dificult_y_rate)
+                dificult_y_rate= random.randint(10, self.dificult_y_rate),
+                speed_rate=36
             ))
 
         return enemies
@@ -91,9 +91,7 @@ class FirstScene(Scene):
         enemy_group = pygame.sprite.Group(self.enemies)
         enemy_player_collisions = pygame.sprite.spritecollide(self.player, enemy_group, True)
         for enemy in enemy_player_collisions:
-            if enemy.id not in self.collided_enemies_ids:
-              self.player.handle_hit()
-              self.collided_enemies_ids.append(enemy.id)
+            self.player.handle_hit()
 
 
     def get_quantities_per_wave(self):
