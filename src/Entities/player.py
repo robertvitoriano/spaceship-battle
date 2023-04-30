@@ -3,21 +3,19 @@ from src.Entities.fire import Fire
 from src.Entities.spaceship import Spaceship
 from src.Entities.directions_enum import DirectionsEnum
 class Player(Spaceship):
-    def __init__(self, screen, image_path, shot_sound_path, fire_image_path, hit_image_path, fire_volume, live_image_path, lives_count):
+    def __init__(self, screen, image_path, shot_sound_path, fire_image_path, hit_image_path, fire_volume, live_image_path, lives):
 
-        super().__init__(screen, image_path, shot_sound_path, fire_image_path,hit_image_path, fire_volume)
+        super().__init__(screen, image_path, shot_sound_path, fire_image_path,hit_image_path, fire_volume, lives=lives)
 
         self.x_position = self.screen_width/2 - self.image.get_width()
         self.y_position = self.screen_height - 100
         self.fires = []
-        self.lives_count = lives_count
         self.live_y_position = 0
         self.live_image = pygame.image.load(live_image_path)
         self.live = pygame.transform.scale(self.live_image, (64,64))
         self.live_x_position = 20
         self.live_margin = 15
         self.live_distance = self.live.get_width() + self.live_margin
-        self.remaining_lives = lives_count
         self.rect = pygame.Rect(self.x_position, self.y_position, self.image.get_width(), self.image.get_height())
         self.has_shot = False
 

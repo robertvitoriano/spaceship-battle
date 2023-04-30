@@ -3,6 +3,7 @@ from src.Entities.enemy import Enemy
 from src.Scenes.scenes_enum import ScenesEnum
 import pygame
 import random
+import time
 
 class FirstScene(Scene):
     def __init__(self, background_image, background_music, screen, player, background_music_volume, background_speed):
@@ -11,12 +12,13 @@ class FirstScene(Scene):
         self.background_music = background_music
         self.player = player
         self.screen = screen
-        self.dificult_y_rate = 10
+        self.dificult_y_rate = 45
         self.number_of_enemy_waves = random.randint(5, 15)
-        self.max_number_of_enemies_per_waves = random.randint(5, 10)
+        self.max_number_of_enemies_per_waves = random.randint(20, 50)
         self.current_wave_index = 0
         self.quantities_per_wave = []
         self.get_quantities_per_wave()
+        self.collided_enemies_ids = []
 
 
     def draw(self):
@@ -42,9 +44,9 @@ class FirstScene(Scene):
                 'assets/images/bullet.png',
                 'assets/images/player_hit.png',
                 0.1,
-                life=10,
+                lives=2,
                 id=i,
-                dificult_y_rate=10
+                dificult_y_rate= random.randint(10, self.dificult_y_rate)
             ))
 
         return enemies
@@ -89,7 +91,11 @@ class FirstScene(Scene):
         enemy_group = pygame.sprite.Group(self.enemies)
         enemy_player_collisions = pygame.sprite.spritecollide(self.player, enemy_group, True)
         for enemy in enemy_player_collisions:
-            self.decrease_player_lives()
+            if enemy.id not in self.collided_enemies_ids:
+              self.player.change_to_hit_image()
+              self.collided_enemies_ids.append(enemy.id)
+              self.decrease_player_lives()
+
 
     def get_quantities_per_wave(self):
         quantities_per_wave = []
@@ -98,7 +104,7 @@ class FirstScene(Scene):
         self.enemies = self.get_current_wave_enemies()
 
     def decrease_player_lives(self):
-        if(self.player.get_remaining_lives() > 0):
+        if(self.player.get_remaining_lives()  >= 1):
            self.player.decrease_lives()
         else:
             from src.game import Game

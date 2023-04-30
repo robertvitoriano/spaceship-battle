@@ -72,13 +72,13 @@ class Game:
                             fire_image_path='assets/images/player_laser.png',
                             hit_image_path='assets/images/player_hit.png',
                             live_image_path='assets/images/heart_image.png',
-                            fire_volume=0.1,
-                            lives_count=5)
+                            fire_volume=0.4,
+                            lives=5)
 
 
             scenes = {
                 ScenesEnum.MENU_SCENE: MenuScene(background_image="assets/images/menu_background.jpg",
-                                                background_music="assets/music/menu_music.mp3",
+                                                background_music="assets/music/infected_vibes_menu_music.mp3",
                                                 screen=screen,background_music_volume=main_volume,
                                                 background_speed=15),
 

@@ -8,8 +8,6 @@ class TryAgainScene(Scene):
     self.try_again_button = TryAgainButton(color=(0,0,0),title="Try again!", height=50, width=300,x=screen.get_width()/2 - 150, y=screen.get_height()/2, screen=screen)
     self.quit_game_button = QuitButton(color=(0,0,0),title="Quit Game!", height=50, width=300,x=screen.get_width()/2 - 150, y=screen.get_height()/3, screen=screen)
 
-
-
   def draw(self):
     super().draw()
     self.try_again_button.draw()

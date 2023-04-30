@@ -10,12 +10,12 @@ from src.Scenes.try_again_scene import TryAgainScene
 from src.Scenes.game_won_scene import GameWonSCene
 
 def main():
-    WIDTH=800
-    HEIGHT=600
+    WIDTH=1024
+    HEIGHT=720
 
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Space Invaders")
-    main_volume = 0.3
+    main_volume = 0.5
 
     player = Player(screen,
                     image_path='assets/images/player.png',
@@ -23,8 +23,8 @@ def main():
                     fire_image_path='assets/images/player_laser.png',
                     hit_image_path='assets/images/player_hit.png',
                     live_image_path='assets/images/heart_image.png',
-                    fire_volume=0.1,
-                    lives_count=5)
+                    fire_volume=0.4,
+                    lives=5)
 
 
     scenes = {

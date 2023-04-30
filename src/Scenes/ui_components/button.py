@@ -26,7 +26,6 @@ class Button(ABC):
     self.button.fill(self.color)
     self.button.blit(text_surface, text_rect)
     self.hovered = False
-    print("MY TITLE "+self.title)
 
   def draw(self):
     self.screen.blit(self.button, (self.x, self.y))

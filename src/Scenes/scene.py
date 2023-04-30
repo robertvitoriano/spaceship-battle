@@ -17,7 +17,6 @@ class Scene():
     self.background_color = background_color
     self.background_image = None
     if background_image is not None:
-      print("MY NOT NONE BACKGROUND IMAGE "+ str(background_image))
       background_image_loaded = pygame.image.load(background_image)
       self.background_image_scalled = pygame.transform.scale(background_image_loaded, (self.screen.get_width(),self.screen.get_height()))
   def draw(self):
