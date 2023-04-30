@@ -79,12 +79,6 @@ class Player(Spaceship):
             live_x_position = self.live_x_position + (self.live_distance * i)
             self.screen.blit(self.live, (live_x_position, self.live_y_position))
 
-    def decrease_lives(self):
-           self.remaining_lives -=1
-
-    def get_remaining_lives(self):
-        return self.remaining_lives
-
 
 
 

@@ -92,9 +92,8 @@ class FirstScene(Scene):
         enemy_player_collisions = pygame.sprite.spritecollide(self.player, enemy_group, True)
         for enemy in enemy_player_collisions:
             if enemy.id not in self.collided_enemies_ids:
-              self.player.change_to_hit_image()
+              self.player.handle_hit()
               self.collided_enemies_ids.append(enemy.id)
-              self.decrease_player_lives()
 
 
     def get_quantities_per_wave(self):
@@ -103,13 +102,6 @@ class FirstScene(Scene):
             self.quantities_per_wave.append(random.randint(5, self.max_number_of_enemies_per_waves))
         self.enemies = self.get_current_wave_enemies()
 
-    def decrease_player_lives(self):
-        if(self.player.get_remaining_lives()  >= 1):
-           self.player.decrease_lives()
-        else:
-            from src.game import Game
-            game = Game.get_instance()
-            game.change_scene(ScenesEnum.TRY_AGAIN_SCENE)
 
 
 
