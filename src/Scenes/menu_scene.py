@@ -11,8 +11,8 @@ class MenuScene(Scene):
       self.screen = screen
       screen_width = screen.get_width()
       screen_height = screen.get_height()
-      self.start_game_button = StartGameButton(screen=self.screen,width=300, height=50,x=screen_width/2 - 150, y=screen_height/3, color=(255, 0, 0), title="Start Game")
-      self.quit_button = QuitButton(screen=self.screen,width=300, height=50,x=screen_width/2 - 150, y=screen_height/2, color=(255, 0, 0), title="Quit Game")
+      self.start_game_button = StartGameButton(screen=self.screen,width=300, height=50,x=screen_width/2 - 150, y=screen_height/3, color=(255, 0, 0), title="Start Game", hover_color=(0,0,0))
+      self.quit_button = QuitButton(screen=self.screen,width=300, height=50,x=screen_width/2 - 150, y=screen_height/2, color=(255, 0, 0), title="Quit Game", hover_color=(0,0,0))
 
     def draw(self):
       super().draw()
@@ -22,3 +22,5 @@ class MenuScene(Scene):
     def handle_scene_events(self, events, keys = None):
       self.start_game_button.handle_button_events(events)
       self.quit_button.handle_button_events(events)
+
+

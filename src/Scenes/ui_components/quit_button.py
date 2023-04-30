@@ -3,8 +3,8 @@ from src.Scenes.ui_components.button import Button
 from src.Scenes.button_enum import ButtonsEnum
 
 class QuitButton(Button):
-    def __init__(self, screen, width, height, x, y, color, title):
-        super().__init__(screen=screen, width=width, height=height, x=x, y=y, color=color, title=title)
+    def __init__(self, screen, width, height, x, y, color, title, hover_color=None):
+        super().__init__(screen=screen, width=width, height=height, x=x, y=y, color=color, title=title, hover_color=hover_color)
 
     def handle_button_events(self, events):
         from src.game import Game

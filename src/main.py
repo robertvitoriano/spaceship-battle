@@ -41,7 +41,7 @@ def main():
         ScenesEnum.GAME_WON_SCENE: GameWonSCene(screen=screen, background_color=(0, 0, 0), background_music="assets/music/lose_background_music.wav", background_music_volume=main_volume),
         ScenesEnum.TRY_AGAIN_SCENE: TryAgainScene(screen=screen, background_color=(0, 0, 0), background_music="assets/music/lose_background_music.wav", background_music_volume=main_volume)
     }
-    game = Game.get_instance(scenes=scenes, starting_scene=ScenesEnum.MENU_SCENE, main_volume=main_volume)
+    game = Game.get_instance(scenes=scenes, starting_scene=ScenesEnum.MENU_SCENE, main_volume=main_volume, screen=screen)
 
     game.run()
 

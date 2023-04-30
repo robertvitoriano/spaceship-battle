@@ -11,7 +11,7 @@ from src.Scenes.first_scene import FirstScene
 game = None
 
 class Game:
-    def __init__(self, scenes, starting_scene, main_volume):
+    def __init__(self, scenes, starting_scene, main_volume, screen):
         pygame.init()
         pygame.mixer.init()
 
@@ -22,12 +22,20 @@ class Game:
         self.FPS = 60
         self.width, self.height = 800, 600
         self.main_volume = main_volume
+        self.screen = screen
+        self.mouse_image = pygame.transform.scale(pygame.image.load('assets/images/custom_mouse_pointer.png'),(50,50))
+        pygame.mouse.set_visible(False)
+
+    def draw_cursor(self):
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+
+        self.screen.blit(self.mouse_image,( mouse_x, mouse_y))
 
     @classmethod
-    def get_instance(cls, scenes=None, starting_scene = 0, main_volume = 0.4):
+    def get_instance(cls, scenes=None, starting_scene = 0, main_volume = 0.4, screen = None):
         global game
         if game is None and scenes is not None:
-            game = Game(scenes=scenes, starting_scene=starting_scene, main_volume=main_volume)
+            game = Game(scenes=scenes, starting_scene=starting_scene, main_volume=main_volume, screen=screen)
         return game
 
     def change_scene(self, new_scene_number):
@@ -45,6 +53,7 @@ class Game:
 
     def draw(self):
         self.scenes[self.current_scene].draw()
+        self.draw_cursor()
 
         pygame.display.update()
 
@@ -90,7 +99,7 @@ class Game:
                                                 background_speed=20)
             }
             game = None
-            game = self.get_instance(scenes, ScenesEnum.MENU_SCENE, main_volume=main_volume)
+            game = self.get_instance(scenes, ScenesEnum.MENU_SCENE, main_volume=main_volume, screen=screen)
 
             game.run()
 
