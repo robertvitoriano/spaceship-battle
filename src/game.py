@@ -48,6 +48,7 @@ class Game:
 
         pygame.display.update()
 
+
     def stop(self):
         self.running = False
 

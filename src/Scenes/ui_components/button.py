@@ -3,7 +3,7 @@ from src.Scenes.button_enum import ButtonsEnum
 from abc import ABC, abstractmethod
 
 class Button(ABC):
-  def __init__(self, screen, width, height,x, y, color, title, font_size=24):
+  def __init__(self, screen, width, height,x, y, color, title, font_size=24,scene_to_go = None):
     pygame.font.init()
     self.width = width
     self.height = height
@@ -14,6 +14,7 @@ class Button(ABC):
     self.screen = screen
     self.button = None
     self.button_rect = None
+    self.scene_to_go = scene_to_go
 
     font = pygame.font.SysFont(None, font_size)
     text_surface = font.render(title, True, (255, 255, 255))
@@ -25,11 +26,12 @@ class Button(ABC):
     self.button.fill(self.color)
     self.button.blit(text_surface, text_rect)
     self.hovered = False
+    print("MY TITLE "+self.title)
 
   def draw(self):
     self.screen.blit(self.button, (self.x, self.y))
 
-  @abstractmethod
+
   def handle_button_events(self, event):
     pass
 

@@ -32,7 +32,7 @@ class FirstScene(Scene):
         enemies = []
         if self.current_wave_index == len(self.quantities_per_wave) - 1:
             game = Game.get_instance()
-            game.restart_game()
+            game.change_scene(ScenesEnum.GAME_WON_SCENE)
 
         for i in range(0,self.quantities_per_wave[self.current_wave_index]):
             enemies.append(Enemy(
@@ -101,7 +101,9 @@ class FirstScene(Scene):
         if(self.player.get_remaining_lives() > 0):
            self.player.decrease_lives()
         else:
-            print("YOU LOST")
+            from src.game import Game
+            game = Game.get_instance()
+            game.change_scene(ScenesEnum.TRY_AGAIN_SCENE)
 
 
 
