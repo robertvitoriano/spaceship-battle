@@ -46,7 +46,7 @@ class FirstScene(Scene):
                 lives=2,
                 id=i,
                 dificult_y_rate= random.randint(10, self.dificult_y_rate),
-                speed_rate=36
+                speed_rate=12
             ))
 
         return enemies
@@ -97,7 +97,7 @@ class FirstScene(Scene):
     def get_quantities_per_wave(self):
         quantities_per_wave = []
         for i in range(0,self.number_of_enemy_waves):
-            self.quantities_per_wave.append(random.randint(5, self.max_number_of_enemies_per_waves))
+            self.quantities_per_wave.append(random.randint(1, self.max_number_of_enemies_per_waves))
         self.enemies = self.get_current_wave_enemies()
 
 

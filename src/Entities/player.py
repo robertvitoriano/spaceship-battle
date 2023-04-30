@@ -3,9 +3,9 @@ from src.Entities.fire import Fire
 from src.Entities.spaceship import Spaceship
 from src.Entities.directions_enum import DirectionsEnum
 class Player(Spaceship):
-    def __init__(self, screen, image_path, shot_sound_path, fire_image_path, hit_image_path, fire_volume, live_image_path, lives):
+    def __init__(self, screen, image_path, shot_sound_path, fire_image_path, hit_image_path, fire_volume, live_image_path, lives, hit_sound_path = None):
 
-        super().__init__(screen, image_path, shot_sound_path, fire_image_path,hit_image_path, fire_volume, lives=lives)
+        super().__init__(screen, image_path, shot_sound_path, fire_image_path,hit_image_path, fire_volume, lives=lives, hit_sound_path=hit_sound_path)
 
         self.x_position = self.screen_width/2 - self.image.get_width()
         self.y_position = self.screen_height - 100

@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from src.Scenes.scenes_enum import ScenesEnum
 
 class Spaceship(pygame.sprite.Sprite, ABC):
-    def __init__(self, screen, image_path, shot_sound_path, fire_image_path, hit_image_path = None, fire_volume = 0.5, lives=5, speed_rate=8):
+    def __init__(self, screen, image_path, shot_sound_path, fire_image_path, hit_image_path = None, fire_volume = 0.5, lives=5, speed_rate=8, hit_sound_path=None):
         super().__init__()
         pygame.mixer.init()
         info = pygame.display.Info()
@@ -31,7 +31,11 @@ class Spaceship(pygame.sprite.Sprite, ABC):
         self.remaining_lives = lives
         self.hit_timer = None
         self.next_hit_timer = None
-        self.time_to_get_out_of_hit_state = 500
+        self.time_to_get_out_of_hit_state = 300
+        self.hit_sound_path = hit_sound_path
+        if self.hit_sound_path is not None:
+            self.hit_sound = pygame.mixer.Sound(self.hit_sound_path)
+            self.hit_sound.set_volume(0.8)
 
     def draw(self):
         self.screen.blit(self.image, (self.x_position, self.y_position))
@@ -82,3 +86,8 @@ class Spaceship(pygame.sprite.Sprite, ABC):
         if self.hit_timer is None and self.image == self.original_image:
             self.decrease_player_lives()
             self.change_to_hit_image()
+            if self.hit_sound_path is not None:
+                self.play_hit_sound()
+
+    def play_hit_sound(self):
+        self.hit_sound.play()
