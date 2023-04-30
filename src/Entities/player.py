@@ -19,7 +19,7 @@ class Player(Spaceship):
         self.live_distance = self.live.get_width() + self.live_margin
         self.remaining_lives = lives_count
         self.rect = pygame.Rect(self.x_position, self.y_position, self.image.get_width(), self.image.get_height())
-
+        self.has_shot = False
 
     def handle_wall_collisions(self):
         if self.x_position >= self.screen_width - self.image.get_width():
@@ -46,12 +46,15 @@ class Player(Spaceship):
         return self.fire_volume*4
 
     def handle_shot(self, keys):
-        if keys[pygame.K_SPACE]:
+        if keys[pygame.K_SPACE] and not self.has_shot:
+            self.has_shot = True
             self.shot_sound.play()
             fire_y_position = self.y_position
             fire_x_position = self.x_position + self.image.get_width() / 2 - self.fire_image.get_width() / 2
             fire = Fire(x=fire_x_position, y=fire_y_position,direction=DirectionsEnum.DOWN.value, fire_image= self.fire_image, screen=self.screen, hit_volume=self.get_hit_volume())
             self.fires.append(fire)
+        elif not keys[pygame.K_SPACE]:
+            self.has_shot =  False
 
     def draw_fires(self):
         new_fires = []
