@@ -25,8 +25,9 @@ class Watcher(FileSystemEventHandler):
             print("Restarting game..", event.src_path)
             self.reload_window()
     def reload_window(self):
+
         game.quit_game()
-        subprocess.call(['python3', '-m','src.main'])
+        subprocess.call(['python3', '-m','main'])
 
 def main():
     global game
