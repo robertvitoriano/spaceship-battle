@@ -31,13 +31,13 @@ class Watcher(FileSystemEventHandler):
 
 def main():
     global game
-    WIDTH=1024
+    WIDTH=1366
 
     HEIGHT=720
 
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Space Invaders")
-    main_volume = 0.5
+    main_volume = 0.3
 
 
     player = Player(screen,
