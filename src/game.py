@@ -15,13 +15,17 @@ class Game:
         pygame.init()
         pygame.mixer.init()
 
+
         self.scenes = scenes
         self.current_scene = starting_scene
+
         self.running = True
         self.clock = pygame.time.Clock()
         self.FPS = 60
+
         self.width, self.height = 800, 600
         self.main_volume = main_volume
+
         self.screen = screen
         self.mouse_image = pygame.transform.scale(pygame.image.load('assets/images/custom_mouse_pointer.png'),(50,50))
         pygame.mouse.set_visible(False)
@@ -65,43 +69,44 @@ class Game:
         self.stop()
 
     def restart_game(self):
-            self.scenes[self.current_scene].stop_background_music()
-            global game
+        self.scenes[self.current_scene].stop_background_music()
+        global game
 
-            WIDTH=800
-            HEIGHT=600
+        # recreate the screen and other objects
+        WIDTH = 800
+        HEIGHT = 600
+        screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption("Space Invaders")
+        main_volume = 0
 
-            screen = pygame.display.set_mode((WIDTH, HEIGHT))
-            pygame.display.set_caption("Space Invaders")
-            main_volume = 0
+        player = Player(screen,
+                        image_path='assets/images/player.png',
+                        shot_sound_path='assets/music/laser.wav',
+                        fire_image_path='assets/images/player_laser.png',
+                        hit_image_path='assets/images/player_hit.png',
+                        live_image_path='assets/images/heart_image.png',
+                        fire_volume=0.4,
+                        lives=5)
 
-            player = Player(screen,
-                            image_path='assets/images/player.png',
-                            shot_sound_path='assets/music/laser.wav',
-                            fire_image_path='assets/images/player_laser.png',
-                            hit_image_path='assets/images/player_hit.png',
-                            live_image_path='assets/images/heart_image.png',
-                            fire_volume=0.4,
-                            lives=5)
+        scenes = {
+            ScenesEnum.MENU_SCENE: MenuScene(background_image="assets/images/menu_background.jpg",
+                                            background_music="assets/music/infected_vibes_menu_music.mp3",
+                                            screen=screen,
+                                            background_music_volume=main_volume,
+                                            background_speed=15),
+            ScenesEnum.FIRST_SCENE: FirstScene(background_image="assets/images/background.png",
+                                              background_music="assets/music/start.wav",
+                                              screen=screen,
+                                              player=player,
+                                              background_music_volume=main_volume,
+                                              background_speed=20)
+        }
 
+        game = None
+        game = self.get_instance(scenes, ScenesEnum.MENU_SCENE, main_volume=main_volume, screen=screen)
 
-            scenes = {
-                ScenesEnum.MENU_SCENE: MenuScene(background_image="assets/images/menu_background.jpg",
-                                                background_music="assets/music/infected_vibes_menu_music.mp3",
-                                                screen=screen,background_music_volume=main_volume,
-                                                background_speed=15),
-
-                ScenesEnum.FIRST_SCENE: FirstScene(background_image="assets/images/background.png",
-                                                background_music="assets/music/start.wav",
-                                                screen=screen,
-                                                player= player,
-                                                background_music_volume=main_volume,
-                                                background_speed=20)
-            }
-            game = None
-            game = self.get_instance(scenes, ScenesEnum.MENU_SCENE, main_volume=main_volume, screen=screen)
-
-            game.run()
+        # call the run method to start the game loop again
+        game.run()
 
     def run(self):
         self.scenes[self.current_scene].play_background_music(self.main_volume)

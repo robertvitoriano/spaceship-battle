@@ -8,14 +8,36 @@ from src.Scenes.first_scene import FirstScene
 from src.Scenes.scenes_enum import ScenesEnum
 from src.Scenes.try_again_scene import TryAgainScene
 from src.Scenes.game_won_scene import GameWonSCene
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
+import subprocess
+
+game = None
+class Watcher(FileSystemEventHandler):
+    def __init__(self):
+        pass
+
+    def on_any_event(self, event):
+        if event.is_directory:
+            return
+        elif event.event_type == 'modified':
+            print("File modified:", event.src_path)
+            print("Restarting game..", event.src_path)
+            self.reload_window()
+    def reload_window(self):
+        game.quit_game()
+        subprocess.call(['python3', '-m','src.main'])
 
 def main():
+    global game
     WIDTH=1024
+
     HEIGHT=720
 
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Space Invaders")
     main_volume = 0.5
+
 
     player = Player(screen,
                     image_path='assets/images/player.png',
@@ -47,4 +69,7 @@ def main():
     game.run()
 
 if __name__ == '__main__':
+    observer = Observer()
+    observer.schedule(Watcher(), path='.',recursive=True)
+    observer.start()
     main()
