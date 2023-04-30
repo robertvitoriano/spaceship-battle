@@ -83,7 +83,8 @@ class Spaceship(pygame.sprite.Sprite, ABC):
 
 
     def handle_hit(self):
-        if self.hit_timer is None and self.image == self.original_image:
+        is_not_being_hit = self.hit_timer is None and self.image == self.original_image
+        if is_not_being_hit :
             self.decrease_player_lives()
             self.change_to_hit_image()
             if self.hit_sound_path is not None:
