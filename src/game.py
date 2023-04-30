@@ -73,8 +73,10 @@ class Game:
         global game
 
         # recreate the screen and other objects
-        WIDTH = 800
-        HEIGHT = 600
+        WIDTH=800
+
+        HEIGHT=600
+
         screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("Space Invaders")
         main_volume = 0
