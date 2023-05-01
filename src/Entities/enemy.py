@@ -46,7 +46,10 @@ class Enemy(Spaceship):
         return self.id
 
     def handle_hit(self):
-        self.change_to_hit_image()
+        is_not_being_hit = self.hit_timer is None and self.image == self.original_image
+        if is_not_being_hit :
+            self.change_to_hit_image()
+
 
 
 

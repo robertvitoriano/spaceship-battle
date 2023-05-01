@@ -41,12 +41,12 @@ class FirstScene(Scene):
                 'assets/images/enemy.png',
                 'assets/music/laser.wav',
                 'assets/images/bullet.png',
-                'assets/images/player_hit.png',
+                'assets/images/enemy_hit_image.png',
                 0.1,
                 lives=2,
                 id=i,
                 dificult_y_rate= random.randint(10, self.dificult_y_rate),
-                speed_rate=12
+                speed_rate=5
             ))
 
         return enemies
@@ -83,6 +83,7 @@ class FirstScene(Scene):
         for i, fire in enumerate(fires):
             collisions = pygame.sprite.spritecollide(fire, enemy_group, True)
             for enemy in collisions:
+                enemy.handle_hit()
                 self.player.remove_fire(i)
                 fire.play_hit_sound()
                 self.enemies.remove(enemy)
