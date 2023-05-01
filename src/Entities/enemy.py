@@ -4,7 +4,6 @@ import random
 class Enemy(Spaceship):
     def __init__(self, screen, image_path, shot_sound_path, fire_image_path, hit_image_path, fire_volume, id,lives = 2, dificult_y_rate = 2, speed_rate=5):
         super().__init__(screen, image_path, shot_sound_path, fire_image_path, hit_image_path, fire_volume, lives = lives, speed_rate=speed_rate)
-
         self.x_position = random.randint(0, self.screen_width - self.image.get_width())
         self.id = id
         self.y_position = 0
@@ -13,7 +12,7 @@ class Enemy(Spaceship):
         self.speed_rate_y = 5 * dificult_y_rate
         self.is_out_screen = False
         self.point_to_get_down = random.randint(0, self.image.get_width())
-
+        self.should_remove = False
 
     def handle_wall_collisions(self):
         if self.x_position <= 0 or self.x_position >= self.screen_width - self.image.get_width():
@@ -49,9 +48,17 @@ class Enemy(Spaceship):
         is_not_being_hit = self.hit_timer is None and self.image == self.original_image
         if is_not_being_hit :
             self.change_to_hit_image()
+            #start hit animation
 
+    def verify_hit_state(self):
+        if self.hit_timer is not None and pygame.time.get_ticks() >= self.hit_timer:
+            self.hit_timer = None
+            self.should_remove = True
 
+    def draw_explosion_animation(self):
+        pass
 
-
+    def should_remove_enemy(self):
+        return self.should_remove
 
 

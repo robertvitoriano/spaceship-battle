@@ -31,7 +31,7 @@ class Spaceship(pygame.sprite.Sprite, ABC):
         self.remaining_lives = lives
         self.hit_timer = None
         self.next_hit_timer = None
-        self.time_to_get_out_of_hit_state = 300
+        self.time_to_get_out_of_hit_state = 600
         self.hit_sound_path = hit_sound_path
         if self.hit_sound_path is not None:
             self.hit_sound = pygame.mixer.Sound(self.hit_sound_path)

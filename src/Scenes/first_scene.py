@@ -1,6 +1,7 @@
 from src.Scenes.scene import Scene
 from src.Entities.enemy import Enemy
 from src.Scenes.scenes_enum import ScenesEnum
+from src.Scenes.game_won_scene import GameWonSCene
 import pygame
 import random
 import time
@@ -18,6 +19,7 @@ class FirstScene(Scene):
         self.current_wave_index = 0
         self.quantities_per_wave = []
         self.get_quantities_per_wave()
+        self.enemies_to_remove = []
 
 
     def draw(self):
@@ -25,6 +27,7 @@ class FirstScene(Scene):
         self.draw_enemies_wave()
         self.player.draw_fires()
         self.player.draw_lives()
+        self.check_enemies_to_remove()
 
 
     def get_current_wave_enemies(self):
@@ -83,10 +86,10 @@ class FirstScene(Scene):
         for i, fire in enumerate(fires):
             collisions = pygame.sprite.spritecollide(fire, enemy_group, True)
             for enemy in collisions:
+                self.enemies_to_remove.append(enemy)
                 enemy.handle_hit()
                 self.player.remove_fire(i)
                 fire.play_hit_sound()
-                self.enemies.remove(enemy)
 
     def handle_enemy_collision_with_player(self):
         enemy_group = pygame.sprite.Group(self.enemies)
@@ -102,6 +105,14 @@ class FirstScene(Scene):
         self.enemies = self.get_current_wave_enemies()
 
 
+    def should_remove_enemy(self):
+        self.time_to_get_out_of_hit_state
+
+    def check_enemies_to_remove(self):
+        for enemy in self.enemies_to_remove:
+            if(enemy.should_remove_enemy()):
+                if enemy in self.enemies:
+                    self.enemies.remove(enemy)
 
 
 

@@ -7,6 +7,8 @@ from src.Entities.fire import Fire
 from src.Scenes.scenes_enum import ScenesEnum
 from src.Scenes.menu_scene import MenuScene
 from src.Scenes.first_scene import FirstScene
+from src.Scenes.try_again_scene import TryAgainScene
+from src.Scenes.game_won_scene import GameWonSCene
 
 game = None
 
@@ -71,11 +73,11 @@ class Game:
     def restart_game(self):
         self.scenes[self.current_scene].stop_background_music()
         global game
-        WIDTH=800
+        WIDTH=1366
 
-        HEIGHT=600
+        HEIGHT=720
 
-        screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
+        screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("Space Invaders")
         main_volume = 0.3
 
