@@ -12,15 +12,18 @@ import glob
 class FirstScene(Scene):
     def __init__(self, background_image, background_music, screen, player, background_music_volume, background_speed):
         super().__init__(background_image=background_image, background_music=background_music, player=player, screen=screen, background_music_volume=background_music_volume, background_speed=background_speed)
-        self.enemy_explosion_sprites = []
-        explosion_folder_path = 'assets/images/explosion_animation_sprites'
-        explosions_sprites_paths = glob.glob(os.path.join(explosion_folder_path, '*'))
-        self.load_enemy_explosion_sprites(explosions_sprites_paths)
+
 
         self.background_image = background_image
         self.background_music = background_music
         self.player = player
         self.screen = screen
+
+        self.enemy_explosion_sprites = []
+        explosion_folder_path = 'assets/images/explosion_animation_sprites'
+        explosions_sprites_paths = glob.glob(os.path.join(explosion_folder_path, '*'))
+        self.load_enemy_explosion_sprites(explosions_sprites_paths)
+
         self.dificult_y_rate = 45
         self.number_of_enemy_waves = random.randint(5, 15)
         self.max_number_of_enemies_per_waves = random.randint(20, 50)
@@ -97,9 +100,9 @@ class FirstScene(Scene):
             collisions = pygame.sprite.spritecollide(fire, enemy_group, True)
             for enemy in collisions:
                 self.enemies_to_remove.append(enemy)
+                fire.play_hit_sound()
                 enemy.handle_hit()
                 self.player.remove_fire(i)
-                fire.play_hit_sound()
 
     def handle_enemy_collision_with_player(self):
         enemy_group = pygame.sprite.Group(self.enemies)
@@ -114,10 +117,6 @@ class FirstScene(Scene):
             self.quantities_per_wave.append(random.randint(1, self.max_number_of_enemies_per_waves))
         self.enemies = self.get_current_wave_enemies()
 
-
-    def should_remove_enemy(self):
-        self.time_to_get_out_of_hit_state
-
     def check_enemies_to_remove(self):
         for enemy in self.enemies_to_remove:
             if(enemy.should_remove_enemy()):
@@ -126,5 +125,7 @@ class FirstScene(Scene):
 
     def load_enemy_explosion_sprites(self, explosions_sprites_paths):
         for explosion_sprite_path in explosions_sprites_paths:
-            self.enemy_explosion_sprites.append(pygame.image.load(explosion_sprite_path))
+            loaded_sprite = pygame.image.load(explosion_sprite_path)
+            sprite = pygame.transform.scale(loaded_sprite, (self.player.get_width(), self.player.get_height()))
+            self.enemy_explosion_sprites.append(sprite)
 

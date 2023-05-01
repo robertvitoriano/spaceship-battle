@@ -50,7 +50,9 @@ class Enemy(Spaceship):
     def handle_hit(self):
         is_not_being_hit = self.hit_timer is None and self.image == self.original_image
         if is_not_being_hit :
+            self.change_to_hit_image()
             self.draw_explosion_animation()
+
 
     def verify_hit_state(self):
         if self.hit_timer is not None and pygame.time.get_ticks() >= self.hit_timer:
@@ -103,7 +105,6 @@ class Enemy(Spaceship):
 
         # Reset the image to the default after the animation is complete
         self.image = self.original_image
-
 
 
 
