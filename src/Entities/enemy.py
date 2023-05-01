@@ -27,9 +27,10 @@ class Enemy(Spaceship):
         pass
 
     def handle_x_movements(self, keys=None):
-        self.x_position += self.speed_rate * self.direction
-
-        self.rect = pygame.Rect(self.x_position, self.y_position, self.image.get_width(), self.image.get_height())
+        is_not_being_hit = self.hit_timer is None and self.image == self.original_image
+        if is_not_being_hit:
+            self.x_position += self.speed_rate * self.direction
+            self.rect = pygame.Rect(self.x_position, self.y_position, self.image.get_width(), self.image.get_height())
 
         self.handle_gone_out_screen()
 
@@ -56,6 +57,7 @@ class Enemy(Spaceship):
             self.should_remove = True
 
     def draw_explosion_animation(self):
+
         pass
 
     def should_remove_enemy(self):

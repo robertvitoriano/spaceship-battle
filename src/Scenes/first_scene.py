@@ -20,6 +20,7 @@ class FirstScene(Scene):
         self.quantities_per_wave = []
         self.get_quantities_per_wave()
         self.enemies_to_remove = []
+        self.enemy_explosion_path = []
 
 
     def draw(self):
