@@ -45,7 +45,7 @@ class FirstScene(Scene):
         from src.game import Game
 
         enemies = []
-        if self.current_wave_index == len(self.quantities_per_wave) - 1:
+        if self.current_wave_index == len(self.quantities_per_wave) - 1 and len(self.enemies) == 0:
             game = Game.get_instance()
             game.change_scene(ScenesEnum.GAME_WON_SCENE)
 
@@ -53,11 +53,11 @@ class FirstScene(Scene):
         for i in range(0,self.quantities_per_wave[self.current_wave_index]):
             enemies.append(Enemy(
                 self.screen,
-                'assets/images/enemy.png',
-                'assets/music/laser.wav',
-                'assets/images/bullet.png',
-                'assets/images/enemy_hit_image.png',
-                0.1,
+                image_path='assets/images/enemy.png',
+                shot_sound_path='assets/music/laser.wav',
+                fire_image_path='assets/images/bullet.png',
+                hit_image_path='assets/images/enemy_hit_image.png',
+                fire_volume=0.4,
                 lives=2,
                 id=i,
                 dificult_y_rate= random.randint(10, self.dificult_y_rate),
@@ -127,5 +127,6 @@ class FirstScene(Scene):
         for explosion_sprite_path in explosions_sprites_paths:
             loaded_sprite = pygame.image.load(explosion_sprite_path)
             sprite = pygame.transform.scale(loaded_sprite, (self.player.get_width(), self.player.get_height()))
+
             self.enemy_explosion_sprites.append(sprite)
 
