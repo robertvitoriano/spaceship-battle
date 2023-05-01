@@ -37,11 +37,9 @@ class Spaceship(pygame.sprite.Sprite, ABC):
             self.hit_sound = pygame.mixer.Sound(self.hit_sound_path)
             self.hit_sound.set_volume(0.8)
 
-    def draw(self, custom_image = None):
-        if custom_image is None:
+    def draw(self):
+        if self.image is not None:
             self.screen.blit(self.image, (self.x_position, self.y_position))
-        else:
-            self.screen.blit(custom_image, (self.x_position, self.y_position))
         self.verify_hit_state()
 
     def destroy(self):
@@ -64,8 +62,8 @@ class Spaceship(pygame.sprite.Sprite, ABC):
         pass
 
     def change_to_hit_image(self):
+        self.set_hit_timer()
         self.image = self.hit_image
-        self.hit_timer = pygame.time.get_ticks() + self.time_to_get_out_of_hit_state
 
 
     def change_to_original_image(self):
@@ -101,3 +99,7 @@ class Spaceship(pygame.sprite.Sprite, ABC):
 
     def get_height(self):
         return self.image.get_height()
+
+    def set_hit_timer(self):
+        self.hit_timer = pygame.time.get_ticks() + self.time_to_get_out_of_hit_state
+

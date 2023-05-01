@@ -18,9 +18,11 @@ class Enemy(Spaceship):
         self.explosion_timer = None
 
     def handle_wall_collisions(self):
-        if self.x_position <= 0 or self.x_position >= self.screen_width - self.image.get_width():
-            self.direction = self.direction * -1
-            self.y_position += self.speed_rate_y
+
+        if self.image is not None:
+            if self.x_position <= 0 or self.x_position >= self.screen_width - self.image.get_width():
+                self.direction = self.direction * -1
+                self.y_position += self.speed_rate_y
 
     def handle_shot(self, keys=None):
 
@@ -51,7 +53,7 @@ class Enemy(Spaceship):
     def handle_hit(self):
         is_not_being_hit = self.hit_timer is None and self.image == self.original_image
         if is_not_being_hit :
-            self.change_to_hit_image()
+            self.set_hit_timer()
             self.draw_explosion_animation()
 
 
@@ -61,13 +63,48 @@ class Enemy(Spaceship):
             self.should_remove = True
 
     def draw_explosion_animation(self):
-            self.image = self.explosion_sprites[0]
-            animation_time_limit = pygame.time.get_ticks() + self.time_to_get_out_of_hit_state
+        # Create an explosion animation group
+        explosion_group = pygame.sprite.Group()
 
-#            while pygame.time.get_ticks() < animation_time_limit:
- #               print("animate")
+        # Create a sprite for each explosion frame and add it to the group
+        for i, explosion_sprite in enumerate(self.explosion_sprites):
+            explosion_animation = pygame.sprite.Sprite()
+            explosion_animation.image = explosion_sprite
+            explosion_animation.rect = self.rect.copy()
+            explosion_group.add(explosion_animation)
 
+        # Set the frame rate of the animation
+        frame_rate = 60
 
+        # Calculate the duration of each explosion sprite
+        explosion_duration = self.time_to_get_out_of_hit_state / len(self.explosion_sprites)
+
+        # Create a timer to control the animation
+        explosion_timer = pygame.time.get_ticks()
+
+        # Start the explosion animation loop
+        for current_sprite_index in range(len(self.explosion_sprites)):
+
+            # Get the current explosion sprite from the group
+            current_explosion_sprite = explosion_group.sprites()[current_sprite_index]
+
+            # Update the explosion sprite position to match the enemy's position
+            current_explosion_sprite.rect = self.rect.copy()
+            self.image = None
+            # Draw the explosion sprite on the screen
+            self.screen.blit(current_explosion_sprite.image, current_explosion_sprite.rect)
+
+            # Check if it's time to switch to the next explosion sprite
+            if pygame.time.get_ticks() - explosion_timer >= explosion_duration:
+
+                # Move to the next explosion sprite index
+                explosion_timer = pygame.time.get_ticks()
+
+            # Update the display
+            pygame.display.update()
+
+        # Remove the explosion group from the screen
+        explosion_group.empty()
 
 
     def should_remove_enemy(self):
