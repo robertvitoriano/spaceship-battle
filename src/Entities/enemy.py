@@ -2,7 +2,7 @@ from src.Entities.spaceship import Spaceship
 import pygame
 import random
 class Enemy(Spaceship):
-    def __init__(self, screen, image_path, shot_sound_path, fire_image_path, hit_image_path, fire_volume, id,lives = 2, dificult_y_rate = 2, speed_rate=5):
+    def __init__(self, screen, image_path, shot_sound_path, fire_image_path, hit_image_path, fire_volume, id,lives = 2, dificult_y_rate = 2, speed_rate=5, explosion_sprites = []):
         super().__init__(screen, image_path, shot_sound_path, fire_image_path, hit_image_path, fire_volume, lives = lives, speed_rate=speed_rate)
         self.x_position = random.randint(0, self.screen_width - self.image.get_width())
         self.id = id
@@ -13,6 +13,8 @@ class Enemy(Spaceship):
         self.is_out_screen = False
         self.point_to_get_down = random.randint(0, self.image.get_width())
         self.should_remove = False
+        self.explosion_sprites=explosion_sprites
+        self.time_per_explosion_sprite = int(self.time_to_get_out_of_hit_state/len(self.explosion_sprites))
 
     def handle_wall_collisions(self):
         if self.x_position <= 0 or self.x_position >= self.screen_width - self.image.get_width():
@@ -48,8 +50,7 @@ class Enemy(Spaceship):
     def handle_hit(self):
         is_not_being_hit = self.hit_timer is None and self.image == self.original_image
         if is_not_being_hit :
-            self.change_to_hit_image()
-            #start hit animation
+            self.draw_explosion_animation()
 
     def verify_hit_state(self):
         if self.hit_timer is not None and pygame.time.get_ticks() >= self.hit_timer:
@@ -57,8 +58,14 @@ class Enemy(Spaceship):
             self.should_remove = True
 
     def draw_explosion_animation(self):
+        explosion_timer = None
+        for i,explosion_sprite in enumerate(self.explosion_sprites):
+            #if((explosion_timer is not None and pygame.time.get_ticks() >= explosion_timer)  or i == 0):
+                self.image = explosion_sprite
+                pygame.time.delay(self.time_per_explosion_sprite)
+               # explosion_timer =  pygame.time.get_ticks() + self.time_per_explosion_sprite
 
-        pass
+
 
     def should_remove_enemy(self):
         return self.should_remove

@@ -5,10 +5,18 @@ from src.Scenes.game_won_scene import GameWonSCene
 import pygame
 import random
 import time
+import os
+import glob
+
 
 class FirstScene(Scene):
     def __init__(self, background_image, background_music, screen, player, background_music_volume, background_speed):
         super().__init__(background_image=background_image, background_music=background_music, player=player, screen=screen, background_music_volume=background_music_volume, background_speed=background_speed)
+        self.enemy_explosion_sprites = []
+        explosion_folder_path = 'assets/images/explosion_animation_sprites'
+        explosions_sprites_paths = glob.glob(os.path.join(explosion_folder_path, '*'))
+        self.load_enemy_explosion_sprites(explosions_sprites_paths)
+
         self.background_image = background_image
         self.background_music = background_music
         self.player = player
@@ -20,7 +28,6 @@ class FirstScene(Scene):
         self.quantities_per_wave = []
         self.get_quantities_per_wave()
         self.enemies_to_remove = []
-        self.enemy_explosion_path = []
 
 
     def draw(self):
@@ -39,6 +46,7 @@ class FirstScene(Scene):
             game = Game.get_instance()
             game.change_scene(ScenesEnum.GAME_WON_SCENE)
 
+
         for i in range(0,self.quantities_per_wave[self.current_wave_index]):
             enemies.append(Enemy(
                 self.screen,
@@ -50,7 +58,8 @@ class FirstScene(Scene):
                 lives=2,
                 id=i,
                 dificult_y_rate= random.randint(10, self.dificult_y_rate),
-                speed_rate=5
+                speed_rate=5,
+                explosion_sprites=self.enemy_explosion_sprites
             ))
 
         return enemies
@@ -115,5 +124,7 @@ class FirstScene(Scene):
                 if enemy in self.enemies:
                     self.enemies.remove(enemy)
 
-
+    def load_enemy_explosion_sprites(self, explosions_sprites_paths):
+        for explosion_sprite_path in explosions_sprites_paths:
+            self.enemy_explosion_sprites.append(pygame.image.load(explosion_sprite_path))
 
