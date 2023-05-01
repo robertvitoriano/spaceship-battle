@@ -58,12 +58,52 @@ class Enemy(Spaceship):
             self.should_remove = True
 
     def draw_explosion_animation(self):
-        explosion_timer = None
-        for i,explosion_sprite in enumerate(self.explosion_sprites):
-            #if((explosion_timer is not None and pygame.time.get_ticks() >= explosion_timer)  or i == 0):
-                self.image = explosion_sprite
-                pygame.time.delay(self.time_per_explosion_sprite)
-               # explosion_timer =  pygame.time.get_ticks() + self.time_per_explosion_sprite
+        # Create an explosion animation sprite
+        explosion_animation = pygame.sprite.Sprite()
+
+        # Set the image to the first explosion sprite
+        explosion_animation.image = self.explosion_sprites[0]
+
+        # Set the rect to the same size and position as the enemy sprite
+        explosion_animation.rect = self.rect
+
+        # Create an animation group and add the explosion animation sprite to it
+        explosion_group = pygame.sprite.Group(explosion_animation)
+
+        # Set the frame rate of the animation
+        frame_rate = 60
+
+        # Calculate the duration of each explosion sprite
+        explosion_duration = self.time_to_get_out_of_hit_state / len(self.explosion_sprites)
+
+        # Create a timer to control the animation
+        explosion_timer = 0
+
+        # Loop until the animation is complete
+        while explosion_timer < self.time_to_get_out_of_hit_state:
+            # Get the time since the last frame (in milliseconds)
+            dt = pygame.time.Clock().tick(frame_rate)
+
+            # Update the explosion animation sprite
+            explosion_animation.image = self.explosion_sprites[int(explosion_timer // explosion_duration)]
+            explosion_animation.rect = self.rect
+
+            # Draw the enemy and the explosion animation on the screen
+            self.draw()
+            explosion_group.draw(self.screen)
+
+            # Update the screen
+            pygame.display.flip()
+
+            # Increment the timer
+            explosion_timer += dt
+
+        # Remove the explosion animation from the group
+        explosion_group.remove(explosion_animation)
+
+        # Reset the image to the default after the animation is complete
+        self.image = self.original_image
+
 
 
 
