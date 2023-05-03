@@ -30,6 +30,7 @@ class Game:
 
         self.screen = screen
         self.mouse_image = pygame.transform.scale(pygame.image.load('assets/images/custom_mouse_pointer.png'),(50,50))
+        self.is_paused = False
         pygame.mouse.set_visible(False)
 
     def draw_cursor(self):
@@ -124,14 +125,29 @@ class Game:
             self.screen.blit(pause_text, (x, y))
             pygame.display.flip()
 
+    def verify_pause(self):
+        keys = pygame.key.get_pressed()
+        events = pygame.event.get()
+        for event in events:
+            if event.type == pygame.KEYDOWN:
+                if keys[pygame.K_SPACE]:
+                    if not self.is_paused:
+                        self.is_paused = False
+                        self.scenes[self.current_scene].play_background_music(self.main_volume)
+                    else:
+                        self.is_paused = True
+                        self.scenes[self.current_scene].stop_background_music()
     def run(self):
+
         self.scenes[self.current_scene].play_background_music(self.main_volume)
 
         while self.running:
-            self.draw()
-            self.update()
+         self.verify_pause()
+         if not self.is_paused:
+                self.draw()
+                self.update()
+         else:
+             self.handle_pause()
+         self.clock.tick(self.FPS)
 
-            self.clock.tick(self.FPS)
-
-        # shut down all Pygame modules
         pygame.quit()
