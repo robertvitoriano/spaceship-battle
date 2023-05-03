@@ -3,7 +3,7 @@ class Fire(pygame.sprite.Sprite):
     def __init__(self, x, y, direction,fire_image, rect = None, screen = None, hit_volume = 0.4 ):
         self.x_position = x
         self.y_position = y
-        self.speed = 100
+        self.speed_rate = 100
         self.direction = direction
         self.fire_image = fire_image
         self.screen = screen
@@ -14,7 +14,7 @@ class Fire(pygame.sprite.Sprite):
 
 
     def update(self):
-        self.y_position += self.speed * self.direction
+        self.y_position += self.speed_rate * self.direction
 
     def play_hit_sound(self):
         self.hit_sound.play()

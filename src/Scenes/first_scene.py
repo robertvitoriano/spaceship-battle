@@ -61,7 +61,7 @@ class FirstScene(Scene):
                 lives=2,
                 id=i,
                 dificult_y_rate= random.randint(10, self.dificult_y_rate),
-                speed_rate=5,
+                speed_rate=15,
                 explosion_sprites=self.enemy_explosion_sprites
             ))
 

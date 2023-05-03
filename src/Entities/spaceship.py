@@ -1,21 +1,20 @@
 import pygame
 from abc import ABC, abstractmethod
 from src.Scenes.scenes_enum import ScenesEnum
-
+import random
 class Spaceship(pygame.sprite.Sprite, ABC):
     def __init__(self, screen, image_path, shot_sound_path, fire_image_path, hit_image_path = None, fire_volume = 0.5, lives=5, speed_rate=8, hit_sound_path=None):
         super().__init__()
         pygame.mixer.init()
         info = pygame.display.Info()
-        self.screen_width = info.current_w
-        self.screen_height = info.current_h
-        self.speed = 0
+        self.screen_width = screen.get_width()
+        self.screen_height = screen.get_height()
         self.speed_rate = speed_rate
         self.right_collision = False
         self.left_collision = False
         self.image = pygame.image.load(image_path)
         self.original_image = self.image
-        self.x_position = self.screen_width/2 - self.image.get_width()
+        self.x_position = random.randint(0, self.screen_width)
         self.y_position = self.screen_height - 100
         self.shot_sound = pygame.mixer.Sound(shot_sound_path)
         self.fire_image = pygame.image.load(fire_image_path)
@@ -35,7 +34,7 @@ class Spaceship(pygame.sprite.Sprite, ABC):
         self.hit_sound_path = hit_sound_path
         if self.hit_sound_path is not None:
             self.hit_sound = pygame.mixer.Sound(self.hit_sound_path)
-            self.hit_sound.set_volume(0.8)
+            self.hit_sound.set_volume(0.3)
 
     def draw(self):
         if self.image is not None:

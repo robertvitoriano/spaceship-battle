@@ -35,7 +35,7 @@ def main():
     HEIGHT=720
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Space Invaders")
-    main_volume = 0.3
+    main_volume = 0
 
 
     player = Player(screen,
@@ -45,7 +45,7 @@ def main():
                     hit_image_path='assets/images/player_hit.png',
                     live_image_path='assets/images/heart_image.png',
                     hit_sound_path="assets/music/player_impact.wav",
-                    fire_volume=0.4,
+                    fire_volume=0,
                     lives=5)
 
 
