@@ -24,7 +24,9 @@ class Game:
         self.running = True
         self.clock = pygame.time.Clock()
         self.FPS = 60
-
+        self.is_paused = False
+        self.pause_font = pygame.font.SysFont("Arial", 50)
+        self.keys = pygame.key.get_pressed()
         self.width, self.height = 800, 600
         self.main_volume = main_volume
         self.screen = screen
@@ -130,12 +132,14 @@ class Game:
                     self.is_paused = not self.is_paused
                     if self.scenes[self.current_scene] is not None:
                         if self.is_paused:
-                            self.scenes[self.current_scene].play_background_music()
-                        else:
                             self.scenes[self.current_scene].stop_background_music()
+                        else:
+                            self.scenes[self.current_scene].play_background_music(self.main_volume)
+
 
 
     def run(self):
+        self.scenes[self.current_scene].play_background_music(self.main_volume)
 
         while self.running:
             self.verify_pause()
@@ -146,5 +150,5 @@ class Game:
                 self.draw()
 
             self.clock.tick(self.FPS)
-        # shut down all Pygame modules
+
         pygame.quit()
