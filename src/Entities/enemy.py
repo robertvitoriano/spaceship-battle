@@ -16,6 +16,7 @@ class Enemy(Spaceship):
         self.should_remove = False
         self.explosion_sprites=explosion_sprites
         self.sprite_counter = 0
+        self.current_explosion_sprite_index = 1
 
     def handle_wall_collisions(self):
 
@@ -65,16 +66,18 @@ class Enemy(Spaceship):
     def draw_explosion_animation(self):
         if(len(self.explosion_sprites) > 0):
             time_per_explosion_sprite =int(self.time_to_get_out_of_hit_state/len(self.explosion_sprites))
-            current_sprite_index = (self.sprite_counter // time_per_explosion_sprite) % len(self.explosion_sprites)
 
-            current_explosion_sprite = self.explosion_sprites[current_sprite_index]
+            current_explosion_sprite = self.explosion_sprites[self.current_explosion_sprite_index-1]
+            if(pygame.time.get_ticks() == self.sprite_counter):
+                self.current_explosion_sprite_index+=1
+                self.sprite_counter = pygame.time.get_ticks() + time_per_explosion_sprite
 
             self.image = None
             self.screen.blit(current_explosion_sprite, self.rect.copy())
             pygame.display.update()
 
-            self.sprite_counter +=1
 
+            self.sprite_counter = pygame.time.get_ticks()
 
     def should_remove_enemy(self):
         return self.should_remove
