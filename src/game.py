@@ -16,6 +16,7 @@ class Game:
     def __init__(self, scenes, starting_scene, main_volume, screen):
         pygame.init()
         pygame.mixer.init()
+        pygame.font.init()
 
 
         self.scenes = scenes
@@ -31,6 +32,7 @@ class Game:
         self.screen = screen
         self.mouse_image = pygame.transform.scale(pygame.image.load('assets/images/custom_mouse_pointer.png'),(50,50))
         self.is_paused = False
+        self.pause_font = pygame.font.Font(None, 50)
         pygame.mouse.set_visible(False)
 
     def draw_cursor(self):
@@ -114,40 +116,38 @@ class Game:
         # call the run method to start the game loop again
         game.run()
 
-    def handle_pause(self):
-        if self.scenes[self.current_scene] is not None:
 
-            self.screen.fill((0,0,0))
-            pause_text = self.pause_font.render("Paused", None, (255, 255, 255))
-            text_width, text_height = pause_text.get_size()
-            x = (self.screen.get_width() - text_width) // 2
-            y = (self.screen.get_height() - text_height) // 2
-            self.screen.blit(pause_text, (x, y))
-            pygame.display.flip()
+    def handle_pause(self):
+        self.screen.fill((0,0,0))
+        pause_text = self.pause_font.render("Paused", None, (255, 255, 255))
+        text_width, text_height = pause_text.get_size()
+        x = (self.screen.get_width() - text_width) // 2
+        y = (self.screen.get_height() - text_height) // 2
+        self.screen.blit(pause_text, (x, y))
+        pygame.display.flip()
 
     def verify_pause(self):
         keys = pygame.key.get_pressed()
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.KEYDOWN:
-                if keys[pygame.K_SPACE]:
-                    if not self.is_paused:
-                        self.is_paused = False
-                        self.scenes[self.current_scene].play_background_music(self.main_volume)
-                    else:
-                        self.is_paused = True
+                if event.key == pygame.K_ESCAPE:
+                    self.is_paused = not self.is_paused
+                    if self.is_paused:
                         self.scenes[self.current_scene].stop_background_music()
-    def run(self):
+                    else:
+                        self.scenes[self.current_scene].play_background_music(self.main_volume)
 
+    def run(self):
         self.scenes[self.current_scene].play_background_music(self.main_volume)
 
         while self.running:
-         self.verify_pause()
-         if not self.is_paused:
+            self.verify_pause()
+            if not self.is_paused:
                 self.draw()
                 self.update()
-         else:
-             self.handle_pause()
-         self.clock.tick(self.FPS)
+            else:
+                self.handle_pause()
+            self.clock.tick(self.FPS)
 
         pygame.quit()
