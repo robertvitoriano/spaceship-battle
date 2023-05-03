@@ -113,6 +113,17 @@ class Game:
         # call the run method to start the game loop again
         game.run()
 
+    def handle_pause(self):
+        if self.scenes[self.current_scene] is not None:
+
+            self.screen.fill((0,0,0))
+            pause_text = self.pause_font.render("Paused", None, (255, 255, 255))
+            text_width, text_height = pause_text.get_size()
+            x = (self.screen.get_width() - text_width) // 2
+            y = (self.screen.get_height() - text_height) // 2
+            self.screen.blit(pause_text, (x, y))
+            pygame.display.flip()
+
     def run(self):
         self.scenes[self.current_scene].play_background_music(self.main_volume)
 

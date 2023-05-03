@@ -11,7 +11,7 @@ class Scene():
     self.background_music_volume = background_music_volume
     self.player = player
     self.screen = screen
-    self.background_music_loaded = None
+    self.background_music_loaded = pygame.mixer.Sound(self.background_music)
     self.background_speed = background_speed
     self.background_y = 0
     self.background_color = background_color
@@ -31,14 +31,7 @@ class Scene():
     else:
       self.screen.fill(self.background_color)
 
-
-
-
-
-
-
   def play_background_music(self, background_music_volume):
-    self.background_music_loaded = pygame.mixer.Sound(self.background_music)
     self.background_music_loaded.set_volume(self.background_music_volume)
     self.background_music_loaded.play(-1)
 
