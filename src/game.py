@@ -16,7 +16,7 @@ class Game:
     def __init__(self, scenes, starting_scene, main_volume, screen):
         pygame.init()
         pygame.mixer.init()
-
+        pygame.font.init()
 
         self.scenes = scenes
         self.current_scene = starting_scene
@@ -27,7 +27,6 @@ class Game:
 
         self.width, self.height = 800, 600
         self.main_volume = main_volume
-
         self.screen = screen
         self.mouse_image = pygame.transform.scale(pygame.image.load('assets/images/custom_mouse_pointer.png'),(50,50))
         pygame.mouse.set_visible(False)
@@ -113,14 +112,39 @@ class Game:
         # call the run method to start the game loop again
         game.run()
 
+    def handle_pause(self):
+        if self.scenes[self.current_scene] is not None:
+
+            self.screen.fill((0,0,0))
+            pause_text = self.pause_font.render("Paused", None, (255, 255, 255))
+            text_width, text_height = pause_text.get_size()
+            x = (self.screen.get_width() - text_width) // 2
+            y = (self.screen.get_height() - text_height) // 2
+            self.screen.blit(pause_text, (x, y))
+            pygame.display.flip()
+
+    def verify_pause(self):
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    self.is_paused = not self.is_paused
+                    if self.scenes[self.current_scene] is not None:
+                        if self.is_paused:
+                            self.scenes[self.current_scene].play_background_music()
+                        else:
+                            self.scenes[self.current_scene].stop_background_music()
+
+
     def run(self):
-        self.scenes[self.current_scene].play_background_music(self.main_volume)
 
         while self.running:
-            self.draw()
-            self.update()
+            self.verify_pause()
+            if self.is_paused:
+                self.handle_pause()
+            else:
+                self.update()
+                self.draw()
 
             self.clock.tick(self.FPS)
-
         # shut down all Pygame modules
         pygame.quit()
