@@ -14,8 +14,7 @@ class Enemy(Spaceship):
         self.is_out_screen = False
         self.point_to_get_down = random.randint(0, self.image.get_width())
         self.should_remove = False
-        self.explosion_sprites= self.get_explosion_sprites(explosion_sprites)
-        self.time_per_explosion_sprite = int(self.time_to_get_out_of_hit_state/len(self.explosion_sprites))
+        self.explosion_sprites=explosion_sprites
         self.sprite_counter = 0
 
     def handle_wall_collisions(self):
@@ -64,26 +63,17 @@ class Enemy(Spaceship):
             self.should_remove = True
 
     def draw_explosion_animation(self):
-        current_sprite_index = (self.sprite_counter // self.time_per_explosion_sprite) % len(self.explosion_sprites)
-        current_explosion_sprite = explosion_group.sprites()[current_sprite_index]
-        current_explosion_sprite.rect = self.rect.copy()
-        self.screen.blit(current_explosion_sprite.image, current_explosion_sprite.rect)
-        self.image = None
-        self.explosion_sprites.remove(current_explosion_sprite)
-        pygame.display.update()
+        if(len(self.explosion_sprites) > 0):
+            time_per_explosion_sprite =int(self.time_to_get_out_of_hit_state/len(self.explosion_sprites))
+            current_sprite_index = (self.sprite_counter // time_per_explosion_sprite) % len(self.explosion_sprites)
 
-        self.sprite_counter +=1
+            current_explosion_sprite = self.explosion_sprites[current_sprite_index]
 
-    def get_explosion_sprites(self, explosion_sprites):
-        explosion_group = pygame.sprite.Group()
+            self.image = None
+            self.screen.blit(current_explosion_sprite, self.rect.copy())
+            pygame.display.update()
 
-        for i, explosion_sprite in enumerate(explosion_sprites):
-            explosion_animation = pygame.sprite.Sprite()
-            explosion_animation.image = explosion_sprite
-
-            explosion_group.add(explosion_animation)
-
-        return explosion_group
+            self.sprite_counter +=1
 
 
     def should_remove_enemy(self):
