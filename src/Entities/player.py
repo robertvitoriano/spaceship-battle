@@ -19,6 +19,9 @@ class Player(Spaceship):
         self.rect = pygame.Rect(self.x_position, self.y_position, self.image.get_width(), self.image.get_height())
         self.has_shot = False
         self.speed_rate = 35
+        self.max_y_position = screen.get_height()/2
+        self.down_collision = False
+        self.limit_y_collision = False
 
     def handle_wall_collisions(self):
         if self.x_position >= self.screen_width - self.image.get_width():
@@ -31,12 +34,32 @@ class Player(Spaceship):
         else:
             self.left_collision = False
 
+        if self.y_position >= self.screen.get_height() - self.get_height()*2:
+            self.down_collision = True
+        else:
+            self.down_collision = False
+
+
+        if self.y_position <= self.max_y_position:
+            self.limit_y_collision = True
+        else:
+            self.limit_y_collision = False
+
+
+
     def handle_x_movements(self, keys):
+        print("DOWN COLLISION ",self.down_collision)
         if keys[pygame.K_LEFT] and not self.left_collision:
             self.x_position -= self.speed_rate
 
         if keys[pygame.K_RIGHT] and not self.right_collision:
             self.x_position += self.speed_rate
+
+    def handle_y_movements(self, keys):
+        if keys[pygame.K_UP] and not self.limit_y_collision:
+            self.y_position -= self.speed_rate
+        if keys[pygame.K_DOWN] and not self.down_collision:
+            self.y_position += self.speed_rate
 
     def get_hit_volume(self):
         return self.fire_volume*4

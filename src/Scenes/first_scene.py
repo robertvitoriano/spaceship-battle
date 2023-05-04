@@ -72,6 +72,7 @@ class FirstScene(Scene):
 
     def handle_player_events(self, events, keys):
         self.player.handle_x_movements(keys)
+        self.player.handle_y_movements(keys)
         self.player.handle_wall_collisions()
         self.player.handle_shot(keys)
         self.handle_enemy_collision_with_player()
