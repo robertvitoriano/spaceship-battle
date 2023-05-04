@@ -22,7 +22,6 @@ class Scene():
       background_image_loaded = pygame.image.load(background_image)
       self.background_image_scalled = pygame.transform.scale(background_image_loaded, (self.screen.get_width(),self.screen.get_height()))
 
-
   def draw(self):
     if self.background_image is not None:
       self.background_y+=self.background_speed
@@ -42,7 +41,6 @@ class Scene():
 
   def stop_background_music(self):
     self.background_music_loaded.stop()
-
 
   def draw_score(self):
     from src.game import Game
