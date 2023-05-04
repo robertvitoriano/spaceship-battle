@@ -24,7 +24,7 @@ class FirstScene(Scene):
         explosions_sprites_paths = glob.glob(os.path.join(explosion_folder_path, '*'))
         self.load_enemy_explosion_sprites(explosions_sprites_paths)
 
-        self.dificult_y_rate = 45
+        self.dificult_y_rate = 20
         self.number_of_enemy_waves = random.randint(5, 15)
         self.max_number_of_enemies_per_waves = random.randint(20, 50)
         self.current_wave_index = 0
@@ -39,7 +39,6 @@ class FirstScene(Scene):
         self.player.draw_fires()
         self.player.draw_lives()
         self.check_enemies_to_remove()
-
 
     def get_current_wave_enemies(self):
         from src.game import Game
@@ -124,6 +123,8 @@ class FirstScene(Scene):
         for enemy in self.enemies_to_remove:
             if(enemy.should_remove_enemy()):
                 if enemy in self.enemies:
+                    if enemy.get_out_of_screen():
+                        self.player.decrease_player_lives()
                     self.enemies.remove(enemy)
 
     def load_enemy_explosion_sprites(self, explosions_sprites_paths):

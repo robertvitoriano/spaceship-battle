@@ -38,10 +38,10 @@ class Enemy(Spaceship):
             self.x_position += self.speed_rate * self.direction
             self.rect = pygame.Rect(self.x_position, self.y_position, self.image.get_width(), self.image.get_height())
 
-        self.handle_gone_out_screen()
+        self.get_out_of_screen()
 
 
-    def handle_gone_out_screen(self):
+    def get_out_of_screen(self):
         if self.y_position >= self.screen.get_height():
             self.is_out_screen = True
 
