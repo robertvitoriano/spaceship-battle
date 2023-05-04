@@ -33,6 +33,7 @@ class Game:
         self.mouse_image = pygame.transform.scale(pygame.image.load('assets/images/custom_mouse_pointer.png'),(50,50))
         self.is_paused = False
         self.pause_font = pygame.font.Font(None, 50)
+        self.score = 0
         pygame.mouse.set_visible(False)
 
     def draw_cursor(self):
@@ -137,6 +138,11 @@ class Game:
                         self.scenes[self.current_scene].stop_background_music()
                     else:
                         self.scenes[self.current_scene].play_background_music(self.main_volume)
+    def get_score(self):
+        return self.score
+
+    def increase_score(self):
+        self.score +=1
 
     def run(self):
         self.scenes[self.current_scene].play_background_music(self.main_volume)

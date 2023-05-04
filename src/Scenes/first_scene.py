@@ -94,11 +94,14 @@ class FirstScene(Scene):
 
 
     def handle_enemy_hit(self):
+        from src.game import Game
+        game = Game.get_instance()
         fires = self.player.get_fires()
         enemy_group = pygame.sprite.Group(self.enemies)
         for i, fire in enumerate(fires):
             collisions = pygame.sprite.spritecollide(fire, enemy_group, True)
             for enemy in collisions:
+                game.increase_score()
                 self.enemies_to_remove.append(enemy)
                 fire.play_hit_sound()
                 enemy.handle_hit()
