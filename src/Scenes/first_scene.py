@@ -12,8 +12,6 @@ import glob
 class FirstScene(Scene):
     def __init__(self, background_image, background_music, screen, player, background_music_volume, background_speed):
         super().__init__(background_image=background_image, background_music=background_music, player=player, screen=screen, background_music_volume=background_music_volume, background_speed=background_speed)
-
-
         self.background_image = background_image
         self.background_music = background_music
         self.player = player
@@ -25,13 +23,14 @@ class FirstScene(Scene):
         self.load_enemy_explosion_sprites(explosions_sprites_paths)
 
         self.dificult_y_rate = 20
-        self.number_of_enemy_waves = random.randint(5, 15)
-        self.max_number_of_enemies_per_waves = random.randint(20, 50)
+        self.number_of_enemy_waves = 5
+        self.max_number_of_enemies_per_waves = self.screen.get_width()//(self.player.image.get_width()*2)
         self.current_wave_index = 0
         self.quantities_per_wave = []
+        self.enemy_rows_per_wave = 5
+
         self.get_quantities_per_wave()
         self.enemies_to_remove = []
-
 
     def draw(self):
         super().draw()
@@ -48,21 +47,22 @@ class FirstScene(Scene):
             game = Game.get_instance()
             game.change_scene(ScenesEnum.GAME_WON_SCENE)
 
-
         for i in range(0,self.quantities_per_wave[self.current_wave_index]):
-            enemies.append(Enemy(
-                self.screen,
-                image_path='assets/images/enemy.png',
-                shot_sound_path='assets/music/laser.wav',
-                fire_image_path='assets/images/bullet.png',
-                hit_image_path='assets/images/enemy_hit_image.png',
-                fire_volume=0.4,
-                lives=2,
-                id=i,
-                dificult_y_rate= random.randint(10, self.dificult_y_rate),
-                speed_rate=15,
-                explosion_sprites=self.enemy_explosion_sprites
-            ))
+            for j in range(0,self.enemy_rows_per_wave):
+                enemies.append(Enemy(
+                    self.screen,
+                    image_path='assets/images/enemy.png',
+                    shot_sound_path='assets/music/laser.wav',
+                    fire_image_path='assets/images/bullet.png',
+                    hit_image_path='assets/images/enemy_hit_image.png',
+                    fire_volume=0.4,
+                    lives=2,
+                    id=i,
+                    speed_rate=15,
+                    explosion_sprites=self.enemy_explosion_sprites,
+                    x_position= min(self.player.image.get_width()*i + self.player.image.get_width(), self.screen.get_width() - self.player.image.get_width()),
+                    y_position= self.player.image.get_height()*j + self.player.image.get_height()
+                ))
 
         return enemies
 
@@ -117,7 +117,7 @@ class FirstScene(Scene):
     def get_quantities_per_wave(self):
         quantities_per_wave = []
         for i in range(0,self.number_of_enemy_waves):
-            self.quantities_per_wave.append(random.randint(1, self.max_number_of_enemies_per_waves))
+            self.quantities_per_wave.append(self.max_number_of_enemies_per_waves)
         self.enemies = self.get_current_wave_enemies()
 
     def check_enemies_to_remove(self):

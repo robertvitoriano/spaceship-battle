@@ -2,15 +2,27 @@ from src.Entities.spaceship import Spaceship
 import pygame
 import random
 class Enemy(Spaceship):
-    def __init__(self, screen, image_path, shot_sound_path, fire_image_path, hit_image_path, fire_volume, id,lives = 2, dificult_y_rate = 2, speed_rate=5, explosion_sprites = []):
+    def __init__(self,
+                 screen,
+                 image_path,
+                 shot_sound_path,
+                 fire_image_path,
+                 hit_image_path,
+                 fire_volume,
+                 id,
+                 x_position,
+                 y_position,
+                 lives = 2,
+                 speed_rate=5,
+                 explosion_sprites = []):
         super().__init__(screen, image_path, shot_sound_path, fire_image_path, hit_image_path, fire_volume, lives = lives, speed_rate=speed_rate)
-        self.x_position = random.randint(0, self.screen_width - self.image.get_width())
+        self.x_position = x_position
+        self.y_position = y_position
         self.id = id
-        self.y_position = 0
         self.direction = 1
         self.time_to_get_out_of_hit_state = 400
         self.rect = pygame.Rect(self.x_position, self.y_position, self.image.get_width(), self.image.get_height())
-        self.speed_rate_y = 5 * dificult_y_rate
+        self.speed_rate_y = 10
         self.is_out_screen = False
         self.point_to_get_down = random.randint(0, self.image.get_width())
         self.should_remove = False
