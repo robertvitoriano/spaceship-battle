@@ -43,7 +43,7 @@ def main():
                     shot_sound_path='assets/music/laser.wav',
                     fire_image_path='assets/images/player_laser.png',
                     hit_image_path='assets/images/player_hit.png',
-                    live_image_path='assets/images/heart_image.png',
+                    life_image_path='assets/images/heart_image.png',
                     hit_sound_path="assets/music/player_impact.wav",
                     fire_volume=0,
                     lives=5)

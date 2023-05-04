@@ -2,23 +2,25 @@ import pygame
 from src.Entities.fire import Fire
 from src.Entities.spaceship import Spaceship
 from src.Entities.directions_enum import DirectionsEnum
+from src.utils.constants import PLAYER_SPEED, LIFE_SIZE,LIFE_X_POSITION,LIFE_MARGIN,PLAYER_Y_OFFSET_INITIAL_POSITION, FIRE_VOLUME_MULTPLIER, LIFE_Y_POSITION
+
 class Player(Spaceship):
-    def __init__(self, screen, image_path, shot_sound_path, fire_image_path, hit_image_path, fire_volume, live_image_path, lives, hit_sound_path = None):
+    def __init__(self, screen, image_path, shot_sound_path, fire_image_path, hit_image_path, fire_volume, life_image_path, lives, hit_sound_path = None):
 
         super().__init__(screen, image_path, shot_sound_path, fire_image_path,hit_image_path, fire_volume, lives=lives, hit_sound_path=hit_sound_path)
 
         self.x_position = screen.get_width()/2 - self.image.get_width()/2
-        self.y_position = self.screen_height - 100
+        self.y_position = self.screen_height - PLAYER_Y_OFFSET_INITIAL_POSITION
         self.fires = []
-        self.live_y_position = 0
-        self.live_image = pygame.image.load(live_image_path)
-        self.live = pygame.transform.scale(self.live_image, (64,64))
-        self.live_x_position = 20
-        self.live_margin = 15
-        self.live_distance = self.live.get_width() + self.live_margin
+        self.life_y_position = LIFE_Y_POSITION
+        self.life_image = pygame.image.load(life_image_path)
+        self.life = pygame.transform.scale(self.life_image, (LIFE_SIZE,LIFE_SIZE))
+        self.life_x_position = LIFE_X_POSITION
+        self.life_margin = LIFE_MARGIN
+        self.life_distance = self.life.get_width() + self.life_margin
         self.rect = pygame.Rect(self.x_position, self.y_position, self.image.get_width(), self.image.get_height())
         self.has_shot = False
-        self.speed_rate = 35
+        self.speed_rate = PLAYER_SPEED
         self.max_y_position = screen.get_height()/2
         self.down_collision = False
         self.limit_y_collision = False
@@ -45,8 +47,6 @@ class Player(Spaceship):
         else:
             self.limit_y_collision = False
 
-
-
     def handle_x_movements(self, keys):
         if keys[pygame.K_LEFT] and not self.left_collision:
             self.x_position -= self.speed_rate
@@ -61,7 +61,7 @@ class Player(Spaceship):
             self.y_position += self.speed_rate
 
     def get_hit_volume(self):
-        return self.fire_volume*4
+        return self.fire_volume*FIRE_VOLUME_MULTPLIER
 
     def handle_shot(self, keys):
         if keys[pygame.K_SPACE] and not self.has_shot:
@@ -96,8 +96,8 @@ class Player(Spaceship):
 
     def draw_lives(self):
         for i in range(self.remaining_lives):
-            live_x_position = self.live_x_position + (self.live_distance * i)
-            self.screen.blit(self.live, (live_x_position, self.live_y_position))
+            life_x_position = self.life_x_position + (self.life_distance * i)
+            self.screen.blit(self.life, (life_x_position, self.life_y_position))
 
 
 
