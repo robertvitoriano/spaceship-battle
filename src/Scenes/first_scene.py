@@ -24,7 +24,7 @@ class FirstScene(Scene):
 
         self.dificult_y_rate = 20
         self.number_of_enemy_waves = 5
-        self.max_number_of_enemies_per_waves = self.screen.get_width()//(self.player.image.get_width()*2)
+        self.max_number_of_enemies_per_row = 2 #self.screen.get_width()//int(self.player.image.get_width()*2)
         self.current_wave_index = 0
         self.quantities_per_wave = []
         self.enemy_rows_per_wave = 5
@@ -117,7 +117,7 @@ class FirstScene(Scene):
     def get_quantities_per_wave(self):
         quantities_per_wave = []
         for i in range(0,self.number_of_enemy_waves):
-            self.quantities_per_wave.append(self.max_number_of_enemies_per_waves)
+            self.quantities_per_wave.append(self.max_number_of_enemies_per_row)
         self.enemies = self.get_current_wave_enemies()
 
     def check_enemies_to_remove(self):
