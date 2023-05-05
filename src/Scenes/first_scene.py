@@ -99,13 +99,14 @@ class FirstScene(Scene):
         fires = self.player.get_fires()
         enemy_group = pygame.sprite.Group(self.enemies)
         for i, fire in enumerate(fires):
-            collisions = pygame.sprite.spritecollide(fire, enemy_group, True)
-            for enemy in collisions:
-                game.increase_score()
-                self.enemies_to_remove.append(enemy)
-                fire.play_hit_sound()
-                enemy.handle_hit()
+            collided_enemies = pygame.sprite.spritecollide(fire, enemy_group, True)
+            if len(collided_enemies) > 0:
+                collided_enemy = collided_enemies[0]
                 self.player.remove_fire(i)
+                game.increase_score()
+                self.enemies_to_remove.append(collided_enemy)
+                fire.play_hit_sound()
+                collided_enemy.handle_hit()
 
     def handle_enemy_collision_with_player(self):
         enemy_group = pygame.sprite.Group(self.enemies)

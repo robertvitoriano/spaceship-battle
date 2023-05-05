@@ -12,7 +12,6 @@ class Fire(pygame.sprite.Sprite):
         self.hit_sound = pygame.mixer.Sound('assets/music/player_laser_hit_sound.mp3')
         self.hit_sound.set_volume(hit_volume)
 
-
     def update(self):
         self.y_position += self.speed_rate * self.direction
 
