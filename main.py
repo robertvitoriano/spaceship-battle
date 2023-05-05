@@ -35,7 +35,7 @@ def main():
     HEIGHT=720
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Space Invaders")
-    main_volume = 0.5
+    main_volume = 0.3
 
 
     player = Player(screen,
@@ -53,7 +53,7 @@ def main():
         ScenesEnum.MENU_SCENE: MenuScene(background_image="assets/images/menu_background.jpg",
                                          background_music="assets/music/infected_vibes_menu_music.mp3",
                                          screen=screen,background_music_volume=main_volume,
-                                         background_speed=15),
+                                         background_speed=20),
 
         ScenesEnum.FIRST_SCENE: FirstScene(background_image="assets/images/background.png",
                                            background_music="assets/music/start.wav",

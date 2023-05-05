@@ -24,12 +24,14 @@ class FirstScene(Scene):
 
         self.dificult_y_rate = 20
         self.number_of_enemy_waves = 5
-        self.max_number_of_enemies_per_row = 2 #self.screen.get_width()//int(self.player.image.get_width()*2)
+        self.max_number_of_enemies_per_row = 4 #self.screen.get_width()//int(self.player.image.get_width()*2)
         self.current_wave_index = 0
-        self.quantities_per_wave = []
+        self.quantities_per_wave_row = []
         self.enemy_rows_per_wave = 5
+        self.enemy_columns_per_wave = 5
+        self.score_font = pygame.font.SysFont(None, 35)
 
-        self.get_quantities_per_wave()
+        self.get_quantities_per_wave_row()
         self.enemies_to_remove = []
 
     def draw(self):
@@ -43,12 +45,12 @@ class FirstScene(Scene):
         from src.game import Game
 
         enemies = []
-        if self.current_wave_index == len(self.quantities_per_wave) - 1 and len(self.enemies) == 0:
+        if self.current_wave_index == len(self.quantities_per_wave_row) - 1 and len(self.enemies) == 0:
             game = Game.get_instance()
             game.change_scene(ScenesEnum.GAME_WON_SCENE)
 
-        for i in range(0,self.quantities_per_wave[self.current_wave_index]):
-            for j in range(0,self.enemy_rows_per_wave):
+        for i in range(0,5):
+            for j in range(0,self.quantities_per_wave_row[self.current_wave_index]):
                 enemies.append(Enemy(
                     self.screen,
                     image_path='assets/images/enemy.png',
@@ -58,9 +60,9 @@ class FirstScene(Scene):
                     fire_volume=0.4,
                     lives=2,
                     id=i,
-                    speed_rate=15,
+                    speed_rate=10,
                     explosion_sprites=self.enemy_explosion_sprites,
-                    x_position= min(self.player.image.get_width()*i + self.player.image.get_width(), self.screen.get_width() - self.player.image.get_width()),
+                    x_position= (self.player.image.get_width()+100)*i,
                     y_position= self.player.image.get_height()*j + self.player.image.get_height()
                 ))
 
@@ -115,10 +117,10 @@ class FirstScene(Scene):
             self.player.handle_hit()
 
 
-    def get_quantities_per_wave(self):
-        quantities_per_wave = []
+    def get_quantities_per_wave_row(self):
+        quantities_per_wave_row = []
         for i in range(0,self.number_of_enemy_waves):
-            self.quantities_per_wave.append(self.max_number_of_enemies_per_row)
+            self.quantities_per_wave_row.append(random.randint(0,self.max_number_of_enemies_per_row))
         self.enemies = self.get_current_wave_enemies()
 
     def check_enemies_to_remove(self):

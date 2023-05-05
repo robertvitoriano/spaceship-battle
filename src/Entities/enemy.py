@@ -1,4 +1,5 @@
 from src.Entities.spaceship import Spaceship
+from src.utils.constants import DEBUG_MODE
 import pygame
 import random
 class Enemy(Spaceship):
@@ -22,13 +23,15 @@ class Enemy(Spaceship):
         self.direction = 1
         self.time_to_get_out_of_hit_state = 400
         self.rect = pygame.Rect(self.x_position, self.y_position, self.image.get_width(), self.image.get_height())
-        self.speed_rate_y = 10
+        self.speed_rate_y = 50
         self.is_out_screen = False
         self.point_to_get_down = random.randint(0, self.image.get_width())
         self.should_remove = False
         self.explosion_sprites=explosion_sprites
         self.sprite_counter = 0
         self.current_explosion_sprite_index = 1
+        self.coordinates_font = pygame.font.SysFont(None, 35)
+        self.debug = DEBUG_MODE
 
     def handle_wall_collisions(self):
 
@@ -47,7 +50,7 @@ class Enemy(Spaceship):
     def handle_x_movements(self, keys=None):
         is_not_being_hit = self.hit_timer is None and self.image == self.original_image
         if is_not_being_hit:
-            self.x_position += self.speed_rate * self.direction
+            self.x_position += (self.speed_rate * self.direction)
             self.rect = pygame.Rect(self.x_position, self.y_position, self.image.get_width(), self.image.get_height())
 
         self.get_out_of_screen()
@@ -75,6 +78,13 @@ class Enemy(Spaceship):
             self.hit_timer = None
             self.should_remove = True
 
+    def draw_coordinates(self):
+        if self.image is not None and self.debug:
+            coordinates_surface = self.coordinates_font.render("X: "+str(self.x_position)+"," +"Y "+ str(self.y_position), True, (255, 0, 0))
+            coordinates_rect = coordinates_surface.get_rect()
+            coordinates_rect.center = (self.x_position+20, self.y_position )
+            self.screen.blit(coordinates_surface, coordinates_rect)
+
     def draw_explosion_animation(self):
         if(len(self.explosion_sprites) > 0):
             time_per_explosion_sprite =int(self.time_to_get_out_of_hit_state/len(self.explosion_sprites))
@@ -90,6 +100,12 @@ class Enemy(Spaceship):
 
 
             self.sprite_counter = pygame.time.get_ticks()
+
+    def draw(self):
+        super().draw()
+
+        self.draw_coordinates()
+
 
     def should_remove_enemy(self):
         return self.should_remove
