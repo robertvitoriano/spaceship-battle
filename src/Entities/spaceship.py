@@ -102,3 +102,8 @@ class Spaceship(pygame.sprite.Sprite, ABC):
     def set_hit_timer(self):
         self.hit_timer = pygame.time.get_ticks() + self.time_to_get_out_of_hit_state
 
+    def get_x_position(self):
+        return self.x_position
+
+    def get_y_position(self):
+        return self.y_position

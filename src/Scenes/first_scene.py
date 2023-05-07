@@ -114,7 +114,9 @@ class FirstScene(Scene):
         enemy_group = pygame.sprite.Group(self.enemies)
         enemy_player_collisions = pygame.sprite.spritecollide(self.player, enemy_group, True)
         for enemy in enemy_player_collisions:
+            enemy.handle_hit()
             self.player.handle_hit()
+            self.enemies_to_remove.append(enemy)
 
 
     def get_quantities_per_wave_row(self):

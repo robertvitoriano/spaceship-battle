@@ -57,9 +57,11 @@ class Player(Spaceship):
     def handle_y_movements(self, keys):
         if keys[pygame.K_UP] and not self.limit_y_collision:
             self.y_position -= self.speed_rate
+
         if keys[pygame.K_DOWN] and not self.down_collision:
             self.y_position += self.speed_rate
 
+        self.rect.top = self.y_position
     def get_hit_volume(self):
         return self.fire_volume*FIRE_VOLUME_MULTPLIER
 
@@ -98,6 +100,9 @@ class Player(Spaceship):
         for i in range(self.remaining_lives):
             life_x_position = self.life_x_position + (self.life_distance * i)
             self.screen.blit(self.life, (life_x_position, self.life_y_position))
+
+    def get_rect(self):
+        return self.rect
 
 
 
