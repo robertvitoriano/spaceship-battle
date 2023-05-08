@@ -83,7 +83,8 @@ class FirstScene(Scene):
             enemy.handle_wall_collisions()
             if(enemy.is_enemy_out_screen()):
                 self.enemies.remove(enemy)
-            if enemy.get_x_position() == random.randint(int(self.player.get_x_position()) - 30, int(self.player.get_x_position())) or enemy.get_x_position() == random.randint(int(self.player.get_x_position()), int(self.player.get_x_position()) +30 ):
+            player_x_pos = self.player.get_x_position()
+            if enemy.get_x_position() >= player_x_pos - 30 and enemy.get_x_position() <= player_x_pos + 30:
                 enemy.handle_shot()
         self.handle_enemy_hit()
 
