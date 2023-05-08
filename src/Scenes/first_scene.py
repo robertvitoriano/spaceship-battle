@@ -55,7 +55,7 @@ class FirstScene(Scene):
                     shot_sound_path='assets/music/laser.wav',
                     fire_image_path='assets/images/bullet.png',
                     hit_image_path='assets/images/enemy_hit_image.png',
-                    fire_volume=0.4,
+                    fire_volume=self.background_music_volume,
                     lives=2,
                     id=i,
                     speed_rate=10,
