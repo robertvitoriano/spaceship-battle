@@ -120,7 +120,7 @@ class Enemy(Spaceship):
             self.shot_sound.play()
             fire_y_position = self.y_position
             fire_x_position = self.x_position + self.image.get_width() / 2 - self.fire_image.get_width() / 2
-            fire = Fire(x=fire_x_position, y=fire_y_position,direction=DirectionsEnum.DOWN.value, fire_image= self.fire_image, screen=self.screen, hit_volume=self.get_hit_volume())
+            fire = Fire(x=fire_x_position, y=fire_y_position,direction=DirectionsEnum.DOWN.value, fire_image= self.fire_image, screen=self.screen, hit_volume=self.get_hit_volume(), speed=50)
             self.fires.append(fire)
 
     def draw_fires(self):

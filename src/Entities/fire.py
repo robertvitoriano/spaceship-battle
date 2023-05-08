@@ -1,9 +1,9 @@
 import pygame
 class Fire(pygame.sprite.Sprite):
-    def __init__(self, x, y, direction,fire_image, rect = None, screen = None, hit_volume = 0.4 ):
+    def __init__(self, x, y, direction,fire_image, rect = None,speed=50, screen = None, hit_volume = 0.4 ):
         self.x_position = x
         self.y_position = y
-        self.speed_rate = 100
+        self.speed = speed
         self.direction = direction
         scaled_fired_image = pygame.transform.scale(fire_image, (60,60))
         self.fire_image = pygame.transform.rotate(scaled_fired_image, 180)
@@ -14,7 +14,7 @@ class Fire(pygame.sprite.Sprite):
         self.hit_sound.set_volume(hit_volume)
 
     def update(self):
-        self.y_position += self.speed_rate * self.direction
+        self.y_position += self.speed * self.direction
 
     def play_hit_sound(self):
         self.hit_sound.play()
