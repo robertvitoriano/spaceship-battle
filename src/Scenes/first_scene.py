@@ -111,12 +111,12 @@ class FirstScene(Scene):
                 collided_enemy.handle_hit()
 
     def handle_enemy_collision_with_player(self):
-        enemy_group = pygame.sprite.Group(self.enemies)
-        enemy_player_collisions = pygame.sprite.spritecollide(self.player, enemy_group, True)
-        for enemy in enemy_player_collisions:
-            enemy.handle_hit()
-            self.player.handle_hit()
-            self.enemies_to_remove.append(enemy)
+        for enemy in self.enemies:
+            enemy_offset = (enemy.rect.topleft[0] - self.player.rect.topleft[0], enemy.rect.topleft[1] - self.player.rect.topleft[1])
+            if self.player.mask.overlap(enemy.mask, enemy_offset):
+                enemy.handle_hit()
+                self.player.handle_hit()
+                self.enemies_to_remove.append(enemy)
 
 
     def get_quantities_per_wave_row(self):
