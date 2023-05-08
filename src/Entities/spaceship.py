@@ -12,7 +12,9 @@ class Spaceship(pygame.sprite.Sprite, ABC):
         self.speed_rate = speed_rate
         self.right_collision = False
         self.left_collision = False
-        self.image = pygame.image.load(image_path)
+        loaded_image = pygame.image.load(image_path)
+        self.image = loaded_image
+        self.mask = pygame.mask.from_surface(self.image)
         self.original_image = self.image
         self.x_position = random.randint(0, self.screen_width)
         self.y_position = self.screen_height - 100

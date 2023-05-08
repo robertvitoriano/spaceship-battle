@@ -6,6 +6,7 @@ class Fire(pygame.sprite.Sprite):
         self.speed_rate = 100
         self.direction = direction
         self.fire_image = fire_image
+        self.mask = pygame.mask.from_surface(fire_image)
         self.screen = screen
         self.image = self.screen.blit(self.fire_image,(x, y))
         self.rect = pygame.Rect(x, y, fire_image.get_width(), fire_image.get_height())
