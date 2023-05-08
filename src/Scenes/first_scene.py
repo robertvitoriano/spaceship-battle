@@ -86,7 +86,8 @@ class FirstScene(Scene):
                 self.enemies.remove(enemy)
             player_x_pos = self.player.get_x_position()
             is_shooting_time = pygame.time.get_ticks() >= self.enemy_shooting_timer
-            if enemy.get_x_position() >= player_x_pos - 30 and enemy.get_x_position() <= player_x_pos + 30 and (is_shooting_time or self.enemy_shooting_timer == 0):
+            is_enemy_above = enemy.get_y_position() < self.player.get_y_position()
+            if enemy.get_x_position() >= player_x_pos - 30 and enemy.get_x_position() <= player_x_pos + 30 and is_shooting_time and is_enemy_above :
                 enemy.handle_shot()
                 self.enemy_shooting_timer = pygame.time.get_ticks() + self.get_interval_for_next_shot()
         self.handle_enemy_hit()
