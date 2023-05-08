@@ -5,10 +5,10 @@ class Fire(pygame.sprite.Sprite):
         self.y_position = y
         self.speed_rate = 100
         self.direction = direction
-        self.fire_image = fire_image
-        self.mask = pygame.mask.from_surface(fire_image)
+        scaled_fired_image = pygame.transform.scale(fire_image, (60,60))
+        self.fire_image = pygame.transform.rotate(scaled_fired_image, 180)
+        self.mask = pygame.mask.from_surface(self.fire_image)
         self.screen = screen
-        self.image = self.screen.blit(self.fire_image,(x, y))
         self.rect = pygame.Rect(x, y, fire_image.get_width(), fire_image.get_height())
         self.hit_sound = pygame.mixer.Sound('assets/music/player_laser_hit_sound.mp3')
         self.hit_sound.set_volume(hit_volume)

@@ -2,6 +2,8 @@ import pygame
 from abc import ABC, abstractmethod
 from src.Scenes.scenes_enum import ScenesEnum
 import random
+from src.utils.constants import FIRE_VOLUME_MULTPLIER
+
 class Spaceship(pygame.sprite.Sprite, ABC):
     def __init__(self, screen, image_path, shot_sound_path, fire_image_path, hit_image_path = None, fire_volume = 0.5, lives=5, speed_rate=8, hit_sound_path=None):
         super().__init__()
@@ -34,6 +36,7 @@ class Spaceship(pygame.sprite.Sprite, ABC):
         self.next_hit_timer = None
         self.time_to_get_out_of_hit_state = 600
         self.hit_sound_path = hit_sound_path
+        self.has_shot = False
         if self.hit_sound_path is not None:
             self.hit_sound = pygame.mixer.Sound(self.hit_sound_path)
             self.hit_sound.set_volume(0.3)
@@ -91,6 +94,9 @@ class Spaceship(pygame.sprite.Sprite, ABC):
             self.change_to_hit_image()
             if self.hit_sound_path is not None:
                 self.play_hit_sound()
+
+    def get_hit_volume(self):
+        return self.fire_volume*FIRE_VOLUME_MULTPLIER
 
     def play_hit_sound(self):
         self.hit_sound.play()

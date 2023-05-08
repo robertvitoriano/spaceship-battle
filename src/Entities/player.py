@@ -2,7 +2,7 @@ import pygame
 from src.Entities.fire import Fire
 from src.Entities.spaceship import Spaceship
 from src.Entities.directions_enum import DirectionsEnum
-from src.utils.constants import PLAYER_SPEED, LIFE_SIZE,LIFE_X_POSITION,LIFE_MARGIN,PLAYER_Y_OFFSET_INITIAL_POSITION, FIRE_VOLUME_MULTPLIER, LIFE_Y_POSITION
+from src.utils.constants import PLAYER_SPEED, LIFE_SIZE,LIFE_X_POSITION,LIFE_MARGIN,PLAYER_Y_OFFSET_INITIAL_POSITION, LIFE_Y_POSITION
 
 class Player(Spaceship):
     def __init__(self, screen, image_path, shot_sound_path, fire_image_path, hit_image_path, fire_volume, life_image_path, lives, hit_sound_path = None):
@@ -19,7 +19,6 @@ class Player(Spaceship):
         self.life_margin = LIFE_MARGIN
         self.life_distance = self.life.get_width() + self.life_margin
         self.rect = pygame.Rect(self.x_position, self.y_position, self.image.get_width(), self.image.get_height())
-        self.has_shot = False
         self.speed_rate = PLAYER_SPEED
         self.max_y_position = screen.get_height()/2
         self.down_collision = False
@@ -64,8 +63,6 @@ class Player(Spaceship):
             self.y_position += self.speed_rate
 
         self.rect.top = self.y_position
-    def get_hit_volume(self):
-        return self.fire_volume*FIRE_VOLUME_MULTPLIER
 
     def handle_shot(self, keys):
         if keys[pygame.K_SPACE] and not self.has_shot:
@@ -73,7 +70,7 @@ class Player(Spaceship):
             self.shot_sound.play()
             fire_y_position = self.y_position
             fire_x_position = self.x_position + self.image.get_width() / 2 - self.fire_image.get_width() / 2
-            fire = Fire(x=fire_x_position, y=fire_y_position,direction=DirectionsEnum.DOWN.value, fire_image= self.fire_image, screen=self.screen, hit_volume=self.get_hit_volume())
+            fire = Fire(x=fire_x_position, y=fire_y_position,direction=DirectionsEnum.UP.value, fire_image= self.fire_image, screen=self.screen, hit_volume=self.get_hit_volume())
             self.fires.append(fire)
         elif not keys[pygame.K_SPACE]:
             self.has_shot =  False
@@ -106,8 +103,7 @@ class Player(Spaceship):
     def get_rect(self):
         return self.rect
 
-
-
-
-
-
+    def draw(self):
+        super().draw()
+        self.draw_fires()
+        self.draw_lives()

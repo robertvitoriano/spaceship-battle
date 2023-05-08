@@ -1,5 +1,8 @@
 from src.Entities.spaceship import Spaceship
 from src.utils.constants import DEBUG_MODE
+from src.Entities.directions_enum import DirectionsEnum
+from src.Entities.fire import Fire
+
 import pygame
 import random
 class Enemy(Spaceship):
@@ -32,6 +35,7 @@ class Enemy(Spaceship):
         self.current_explosion_sprite_index = 1
         self.coordinates_font = pygame.font.SysFont(None, 35)
         self.debug = DEBUG_MODE
+        self.fires = []
 
     def handle_wall_collisions(self):
 
@@ -103,11 +107,31 @@ class Enemy(Spaceship):
 
     def draw(self):
         super().draw()
-
         self.draw_coordinates()
+        self.draw_fires()
 
 
     def should_remove_enemy(self):
         return self.should_remove
 
 
+    def handle_shot(self):
+        if self.image is not None:
+            self.shot_sound.play()
+            fire_y_position = self.y_position
+            fire_x_position = self.x_position + self.image.get_width() / 2 - self.fire_image.get_width() / 2
+            fire = Fire(x=fire_x_position, y=fire_y_position,direction=DirectionsEnum.DOWN.value, fire_image= self.fire_image, screen=self.screen, hit_volume=self.get_hit_volume())
+            self.fires.append(fire)
+
+    def draw_fires(self):
+        new_fires = []
+
+        for fire in self.fires:
+            fire.update()
+            if fire.y_position < self.screen.get_height():
+                fire.draw(fire.x_position, fire.y_position)
+                new_fires.append(fire)
+            else:
+                del fire
+
+        self.fires = new_fires

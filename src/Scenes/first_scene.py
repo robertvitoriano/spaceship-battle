@@ -37,8 +37,6 @@ class FirstScene(Scene):
     def draw(self):
         super().draw()
         self.draw_enemies_wave()
-        self.player.draw_fires()
-        self.player.draw_lives()
         self.check_enemies_to_remove()
 
     def get_current_wave_enemies(self):
@@ -81,8 +79,11 @@ class FirstScene(Scene):
 
     def handle_enemies_events(self, keys):
         for enemy in self.enemies:
+            if enemy.get_x_position() == self.player.get_x_position():
+                enemy.handle_shot()
             enemy.handle_x_movements(keys)
             enemy.handle_wall_collisions()
+
             if(enemy.is_enemy_out_screen()):
                 self.enemies.remove(enemy)
         self.handle_enemy_hit()
