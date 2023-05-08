@@ -124,14 +124,11 @@ class Enemy(Spaceship):
             self.fires.append(fire)
 
     def draw_fires(self):
-        new_fires = []
+        if len(self.fires) == 0: return
 
-        for fire in self.fires:
-            fire.update()
-            if fire.y_position < self.screen.get_height():
-                fire.draw(fire.x_position, fire.y_position)
-                new_fires.append(fire)
-            else:
-                del fire
+        self.fires[0].update()
+        if self.fires[0].y_position < self.screen.get_height():
+            self.fires[0].draw(self.fires[0].x_position, self.fires[0].y_position)
+        else:
+            self.fires = []
 
-        self.fires = new_fires
