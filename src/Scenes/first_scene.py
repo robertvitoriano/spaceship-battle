@@ -2,6 +2,7 @@ from src.Scenes.scene import Scene
 from src.Entities.enemy import Enemy
 from src.Scenes.scenes_enum import ScenesEnum
 from src.Scenes.game_won_scene import GameWonSCene
+from src.utils.constants import MINIMUM_SHOOTING_INTERVAL, MAXIMUM_SHOOTING_INTERVAL
 import pygame
 import random
 import time
@@ -24,13 +25,13 @@ class FirstScene(Scene):
 
         self.dificult_y_rate = 20
         self.number_of_enemy_waves = 5
-        self.max_number_of_enemies_per_row = 4 #self.screen.get_width()//int(self.player.image.get_width()*2)
+        self.max_number_of_enemies_per_row = 4
         self.current_wave_index = 0
         self.quantities_per_wave_row = []
         self.enemy_rows_per_wave = 5
         self.enemy_columns_per_wave = 5
         self.score_font = pygame.font.SysFont(None, 35)
-
+        self.enemy_shooting_timer = 0
         self.get_quantities_per_wave_row()
         self.enemies_to_remove = []
 
@@ -84,8 +85,10 @@ class FirstScene(Scene):
             if(enemy.is_enemy_out_screen()):
                 self.enemies.remove(enemy)
             player_x_pos = self.player.get_x_position()
-            if enemy.get_x_position() >= player_x_pos - 30 and enemy.get_x_position() <= player_x_pos + 30:
+            is_shooting_time = pygame.time.get_ticks() >= self.enemy_shooting_timer
+            if enemy.get_x_position() >= player_x_pos - 30 and enemy.get_x_position() <= player_x_pos + 30 and (is_shooting_time or self.enemy_shooting_timer == 0):
                 enemy.handle_shot()
+                self.enemy_shooting_timer = pygame.time.get_ticks() + self.get_interval_for_next_shot()
         self.handle_enemy_hit()
 
     def draw_enemies_wave(self):
@@ -141,3 +144,5 @@ class FirstScene(Scene):
 
             self.enemy_explosion_sprites.append(sprite)
 
+    def get_interval_for_next_shot(self):
+        return random.randint(MINIMUM_SHOOTING_INTERVAL, MAXIMUM_SHOOTING_INTERVAL)
