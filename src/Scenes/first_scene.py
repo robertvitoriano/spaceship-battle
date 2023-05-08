@@ -79,13 +79,12 @@ class FirstScene(Scene):
 
     def handle_enemies_events(self, keys):
         for enemy in self.enemies:
-            if enemy.get_x_position() == self.player.get_x_position():
-                enemy.handle_shot()
             enemy.handle_x_movements(keys)
             enemy.handle_wall_collisions()
-
             if(enemy.is_enemy_out_screen()):
                 self.enemies.remove(enemy)
+            if enemy.get_x_position() == random.randint(int(self.player.get_x_position()) - 30, int(self.player.get_x_position())) or enemy.get_x_position() == random.randint(int(self.player.get_x_position()), int(self.player.get_x_position()) +30 ):
+                enemy.handle_shot()
         self.handle_enemy_hit()
 
     def draw_enemies_wave(self):

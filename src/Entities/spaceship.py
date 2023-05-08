@@ -39,7 +39,7 @@ class Spaceship(pygame.sprite.Sprite, ABC):
         self.has_shot = False
         if self.hit_sound_path is not None:
             self.hit_sound = pygame.mixer.Sound(self.hit_sound_path)
-            self.hit_sound.set_volume(0.3)
+            self.hit_sound.set_volume(self.fire_volume)
 
     def draw(self):
         if self.image is not None:
