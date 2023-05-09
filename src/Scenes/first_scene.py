@@ -77,20 +77,28 @@ class FirstScene(Scene):
         self.player.handle_wall_collisions()
         self.player.handle_shot(keys)
         self.handle_enemy_collision_with_player()
+        self.handle_player_hit()
 
     def handle_enemies_events(self, keys):
         for enemy in self.enemies:
             enemy.handle_x_movements(keys)
             enemy.handle_wall_collisions()
-            if(enemy.is_enemy_out_screen()):
-                self.enemies.remove(enemy)
-            player_x_pos = self.player.get_x_position()
-            is_shooting_time = pygame.time.get_ticks() >= self.enemy_shooting_timer
-            is_enemy_above = enemy.get_y_position() < self.player.get_y_position()
-            if enemy.get_x_position() >= player_x_pos - 30 and enemy.get_x_position() <= player_x_pos + 30 and is_shooting_time and is_enemy_above :
-                enemy.handle_shot()
-                self.enemy_shooting_timer = pygame.time.get_ticks() + self.get_interval_for_next_shot()
+            self.handle_enemy_out_of_screen(enemy)
+            self.handle_enemies_shooting(enemy)
         self.handle_enemy_hit()
+
+
+    def handle_enemies_shooting(self, enemy):
+        player_x_pos = self.player.get_x_position()
+        is_shooting_time = pygame.time.get_ticks() >= self.enemy_shooting_timer
+        is_enemy_above = enemy.get_y_position() < self.player.get_y_position()
+        if enemy.get_x_position() >= player_x_pos - 30 and enemy.get_x_position() <= player_x_pos + 30 and is_shooting_time and is_enemy_above :
+            enemy.handle_shot()
+            self.enemy_shooting_timer = pygame.time.get_ticks() + self.get_interval_for_next_shot()
+
+    def handle_enemy_out_of_screen(self, enemy):
+        if(enemy.is_enemy_out_screen()):
+            self.enemies.remove(enemy)
 
     def draw_enemies_wave(self):
         if(len(self.enemies) == 0):
@@ -114,6 +122,21 @@ class FirstScene(Scene):
                 self.enemies_to_remove.append(collided_enemy)
                 fire.play_hit_sound()
                 collided_enemy.handle_hit()
+
+    def handle_player_hit(self):
+        fires_group = pygame.sprite.Group()
+        for enemy in self.enemies:
+            enemy_fires = enemy.get_fires()
+            if len(enemy_fires) > 0:
+                fires_group.add(enemy_fires[0])
+
+        for fire in fires_group:
+            collided_with_player = pygame.sprite.spritecollide(self.player, fires_group, True)
+            if len(collided_with_player) > 0:
+                collided_fire = collided_with_player[0]
+                self.player.handle_hit()
+                fire.play_hit_sound()
+                fires_group.remove(fire)
 
     def handle_enemy_collision_with_player(self):
         for enemy in self.enemies:

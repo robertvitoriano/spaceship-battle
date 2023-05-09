@@ -132,3 +132,6 @@ class Enemy(Spaceship):
         else:
             self.fires = []
 
+    def get_fires(self):
+        return self.fires
+
