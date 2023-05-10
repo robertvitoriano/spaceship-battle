@@ -18,6 +18,8 @@ class Spaceship(pygame.sprite.Sprite, ABC):
         self.image = loaded_image
         self.mask = pygame.mask.from_surface(self.image)
         self.original_image = self.image
+        self.height = self.image.get_height()
+        self.width = self.image.get_width()
         self.x_position = random.randint(0, self.screen_width)
         self.y_position = self.screen_height - 100
         self.shot_sound = pygame.mixer.Sound(shot_sound_path)
@@ -102,10 +104,10 @@ class Spaceship(pygame.sprite.Sprite, ABC):
         self.hit_sound.play()
 
     def get_width(self):
-        return self.image.get_width()
+        return self.width
 
     def get_height(self):
-        return self.image.get_height()
+        return self.height
 
     def set_hit_timer(self):
         self.hit_timer = pygame.time.get_ticks() + self.time_to_get_out_of_hit_state
