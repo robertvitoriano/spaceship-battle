@@ -62,7 +62,7 @@ class FirstScene(Scene):
                     speed_rate=10,
                     explosion_sprites=self.enemy_explosion_sprites,
                     x_position= (self.player.image.get_width()+100)*i,
-                    y_position= self.player.image.get_height()*j + self.player.image.get_height()
+                    y_position= -1 * (self.player.image.get_height()*j + self.player.image.get_height())
                 ))
 
         return enemies
@@ -92,7 +92,7 @@ class FirstScene(Scene):
         player_x_pos = self.player.get_x_position()
         is_shooting_time = pygame.time.get_ticks() >= self.enemy_shooting_timer
         is_enemy_above = enemy.get_y_position() < self.player.get_y_position()
-        if enemy.get_x_position() >= player_x_pos - 30 and enemy.get_x_position() <= player_x_pos + 30 and is_shooting_time and is_enemy_above :
+        if enemy.get_x_position() >= player_x_pos - 30 and enemy.get_x_position() <= player_x_pos + 30 and is_shooting_time and is_enemy_above and enemy.get_y_position() >= enemy.get_height() :
             enemy.handle_shot()
             self.enemy_shooting_timer = pygame.time.get_ticks() + self.get_interval_for_next_shot()
 
@@ -117,11 +117,12 @@ class FirstScene(Scene):
             collided_enemies = pygame.sprite.spritecollide(fire, enemy_group, True)
             if len(collided_enemies) > 0:
                 collided_enemy = collided_enemies[0]
-                self.player.remove_fire(i)
-                game.increase_score()
-                self.enemies_to_remove.append(collided_enemy)
-                fire.play_hit_sound()
-                collided_enemy.handle_hit()
+                if collided_enemy.get_y_position() > collided_enemy.get_height():
+                    self.player.remove_fire(i)
+                    game.increase_score()
+                    self.enemies_to_remove.append(collided_enemy)
+                    fire.play_hit_sound()
+                    collided_enemy.handle_hit()
 
     def handle_player_hit(self):
         fires_group = pygame.sprite.Group()
