@@ -54,7 +54,7 @@ class Enemy(Spaceship):
     def handle_x_movements(self, keys=None):
         is_not_being_hit = self.hit_timer is None and self.image == self.original_image
         if is_not_being_hit:
-            self.x_position += (self.speed_rate * self.direction) if self.get_y_position() >= self.get_height() else (self.speed_rate * self.direction*4)
+            self.x_position += (self.speed_rate * self.direction)
             self.rect = pygame.Rect(self.x_position, self.y_position, self.image.get_width(), self.image.get_height())
 
         self.get_out_of_screen()
