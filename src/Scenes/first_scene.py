@@ -59,7 +59,7 @@ class FirstScene(Scene):
                     fire_volume=self.background_music_volume,
                     lives=2,
                     id=i,
-                    speed_rate=10,
+                    speed_rate=15,
                     explosion_sprites=self.enemy_explosion_sprites,
                     x_position= (self.player.image.get_width()+100)*i,
                     y_position= -1 * (self.player.image.get_height()*j + self.player.image.get_height())
