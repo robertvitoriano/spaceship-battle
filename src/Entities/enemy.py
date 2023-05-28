@@ -135,3 +135,7 @@ class Enemy(Spaceship):
     def get_fires(self):
         return self.fires
 
+    def is_above(self):
+       return  self.y_position < self.height
+
+
