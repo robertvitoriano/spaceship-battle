@@ -15,7 +15,7 @@ class Spaceship(pygame.sprite.Sprite, ABC):
         self.right_collision = False
         self.left_collision = False
         loaded_image = pygame.image.load(image_path)
-        self.image = loaded_image
+        self.image = pygame.transform.scale(loaded_image, (64,64))
         self.mask = pygame.mask.from_surface(self.image)
         self.original_image = self.image
         self.height = self.image.get_height()
@@ -24,7 +24,7 @@ class Spaceship(pygame.sprite.Sprite, ABC):
         self.y_position = self.screen_height - 100
         self.shot_sound = pygame.mixer.Sound(shot_sound_path)
         self.fire_image = pygame.image.load(fire_image_path)
-        self.hit_image = pygame.image.load(hit_image_path)
+        self.hit_image = pygame.transform.scale(pygame.image.load(hit_image_path),(64,64))
         self.fire_speed = 5
         self.fire_volume = fire_volume
         self.shot_sound.set_volume(self.fire_volume)

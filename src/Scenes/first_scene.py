@@ -52,7 +52,7 @@ class FirstScene(Scene):
             for j in range(0,self.quantities_per_wave_row[self.current_wave_index]):
                 enemies.append(Enemy(
                     self.screen,
-                    image_path='assets/images/enemy.png',
+                    image_path='assets/images/tomatildes-real.png',
                     shot_sound_path='assets/music/laser.wav',
                     fire_image_path='assets/images/bullet.png',
                     hit_image_path='assets/images/enemy_hit_image.png',

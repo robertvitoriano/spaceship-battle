@@ -39,10 +39,10 @@ def main():
 
 
     player = Player(screen,
-                    image_path='assets/images/player.png',
+                    image_path='assets/images/bolotildes-real.png',
                     shot_sound_path='assets/music/laser.wav',
                     fire_image_path='assets/images/player_laser.png',
-                    hit_image_path='assets/images/player_hit.png',
+                    hit_image_path='assets/images/bolota-grito-real.png',
                     life_image_path='assets/images/heart_image.png',
                     hit_sound_path="assets/music/player_impact.wav",
                     fire_volume=0.5,
