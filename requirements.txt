@@ -1,2 +1,2 @@
-pygame==2.4.0
+pygame==2.6.0
 watchdog==3.0.0
